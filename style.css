@@ -1,89 +1,47 @@
-/* GEH NAILS - STYLE.CSS 
-   FINALIZAÇÃO: TRANSIÇÕES LÍQUIDAS & REVELAÇÃO AMBICIOSA
-*/
+/* GEH NAILS - STYLE.CSS */
 
-/* 1. SISTEMA DE ANIMAÇÃO (KEYFRAMES) */
-
+/* 1. ANIMAÇÕES (KEYFRAMES) */
 @keyframes revealLogo {
-  0% { opacity: 0; letter-spacing: 30px; filter: blur(15px); transform: scale(0.9); }
-  100% { opacity: 1; letter-spacing: -5px; filter: blur(0); transform: scale(1); }
+  0% { opacity: 0; letter-spacing: 20px; filter: blur(10px); }
+  100% { opacity: 1; letter-spacing: -5px; filter: blur(0); }
 }
 
-/* Transição de revelação "Líquida" (Ambição técnica) */
 @keyframes liquidReveal {
-  0% { 
-    opacity: 0; 
-    clip-path: inset(0 0 100% 0); 
-    filter: blur(20px) saturate(0);
-    transform: translateY(40px);
-  }
-  100% { 
-    opacity: 1; 
-    clip-path: inset(0 0 0 0); 
-    filter: blur(0) saturate(1);
-    transform: translateY(0);
-  }
-}
-
-@keyframes nangsWobble {
-  0% { filter: hue-rotate(0deg); transform: scale(1); }
-  50% { filter: hue-rotate(8deg); transform: scale(1.01); }
-  100% { filter: hue-rotate(0deg); transform: scale(1); }
+  0% { opacity: 0; clip-path: inset(0 0 100% 0); filter: blur(15px); transform: translateY(30px); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); filter: blur(0); transform: translateY(0); }
 }
 
 @keyframes breath {
-  0%, 100% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.03); opacity: 1; }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
-@keyframes shine {
-  to { background-position: 200% center; }
-}
-
-/* 2. REVELAÇÃO DINÂMICA (A CLASSE MÁGICA) */
-
+/* 2. SISTEMA DE REVELAÇÃO (JS TRIGGER) */
 .reveal {
   opacity: 0;
-  pointer-events: none;
+  transition: opacity 1s ease;
 }
 
 .reveal.visible {
-  pointer-events: all;
-  animation: liquidReveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: liquidReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* 3. COMPONENTES: HERO E TEXTO */
-
+/* 3. HERO & TEXTO */
 .hero-logo-text {
-  animation: 
-    revealLogo 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-    nangsWobble 6s ease-in-out infinite alternate;
+  animation: revealLogo 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .typing-container {
   min-height: 1.5em;
-  font-family: serif;
-  font-style: italic;
   color: var(--dark-purple);
+  font-style: italic;
 }
 
-/* 4. MANIFESTO (A ESSÊNCIA) */
-
-/* Escalonamento rítmico dos parágrafos */
-.sobre-manifesto.visible p:nth-child(1) { animation-delay: 0.2s; }
-.sobre-manifesto.visible p:nth-child(2) { animation-delay: 0.4s; }
-.sobre-manifesto.visible p:nth-child(3) { animation-delay: 0.6s; }
-
-/* 5. GALERIA: COMPORTAMENTO INTERATIVO */
-
+/* 4. GALERIA & INTERAÇÃO */
 .galeria img {
   opacity: 0;
-  transform: scale(1.1);
-  transition: 
-    opacity 1.2s ease,
-    filter 1s ease,
-    transform 0.8s cubic-bezier(0.2, 1, 0.3, 1),
-    border-radius 0.6s ease;
+  transform: scale(1.05);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .galeria img.visible {
@@ -92,83 +50,61 @@
 }
 
 .galeria img:hover {
-  filter: grayscale(0) contrast(1.1) brightness(1.05);
-  transform: scale(0.96) rotate(1deg);
-  border-radius: 15% 5% 15% 5% / 5% 15% 5% 15%;
-  z-index: 10;
+  transform: scale(0.95);
+  border-radius: 20px;
+  filter: saturate(1.2);
 }
 
-/* 6. INTERFACE SOCIAL E BARRA DE PROGRESSO */
-
+/* 5. INTERFACE & CURSOR */
 .glass-btn.breath {
-  animation: breath 4s ease-in-out infinite;
+  animation: breath 3s ease-in-out infinite;
 }
-
-.glass-btn:hover {
-  color: var(--dark-purple);
-  letter-spacing: 3px;
-  transition: all 0.4s ease;
-}
-
-/* Barra de progresso no topo (GitHub Style) */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  height: 3px;
-  width: var(--scroll-width, 0%);
-  background: var(--dark-purple);
-  z-index: 10001;
-  transition: width 0.2s ease-out;
-}
-
-/* 7. CURSOR MAGNÉTICO (ESTÉTICA LO-FI) */
 
 .cursor-dot {
   width: 6px; height: 6px;
-  background-color: var(--dark-purple);
-  position: fixed; top: 0; left: 0;
-  transform: translate(-50%, -50%);
-  border-radius: 50%; z-index: 10002;
-  pointer-events: none;
+  background: var(--dark-purple);
+  position: fixed; pointer-events: none;
+  z-index: 10002; border-radius: 50%;
 }
 
 .cursor-outline {
-  width: 35px; height: 35px;
+  width: 30px; height: 30px;
   border: 1px solid var(--dark-purple);
+  position: fixed; pointer-events: none;
+  z-index: 10001; border-radius: 50%;
+  transition: transform 0.15s ease-out;
+}
+
+/* 6. BARRA DE PROGRESSO */
+body::before {
+  content: "";
   position: fixed; top: 0; left: 0;
-  transform: translate(-50%, -50%);
-  border-radius: 50%; z-index: 10001;
-  pointer-events: none;
-  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), 
-              height 0.4s cubic-bezier(0.23, 1, 0.32, 1), 
-              background-color 0.4s ease;
+  height: 3px; background: var(--dark-purple);
+  width: var(--scroll-width, 0%);
+  z-index: 10001;
 }
 
-.cursor-hover {
-  width: 65px; height: 65px;
-  background-color: rgba(162, 148, 249, 0.1);
-  border: 1px solid var(--medium-purple);
-}
-
-/* 8. REFINO DE RODAPÉ */
-
+/* 7. FOOTER DE LUXO */
 .footer-simple p {
-  background: linear-gradient(90deg, var(--dark-purple), #fff, var(--dark-purple));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 8s linear infinite;
+  font-size: 1.2rem;
+  color: var(--dark-purple);
 }
 
-/* ADAPTAÇÃO PARA DISPOSITIVOS */
-
-@media (pointer: fine) {
-  body { cursor: none; }
-  a, .galeria img { cursor: none; }
+.footer-simple::before {
+  content: "GEH";
+  position: absolute; bottom: -10px; right: -10px;
+  font-size: 12rem; font-weight: 900;
+  color: var(--dark-purple); opacity: 0.03;
+  pointer-events: none;
 }
 
+/* RESPONSIVIDADE */
 @media (max-width: 768px) {
   .cursor-dot, .cursor-outline { display: none; }
   body { cursor: auto; }
+  .footer-simple::before { font-size: 8rem; }
+}
+
+@media (pointer: fine) {
+  body, a, .galeria img { cursor: none; }
 }
