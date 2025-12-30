@@ -37,19 +37,30 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (video) {
+    // Tenta tocar o vídeo
     video.play().catch(() => {
       console.log("Play aguardando interação - iniciando digitação");
       startTyping();
     });
     
+    // Quando o vídeo terminar, pausa e inicia digitação
     video.addEventListener("ended", () => {
+      video.pause(); // PARA O VÍDEO
+      video.currentTime = video.duration; // Garante que está no fim
       startTyping();
     });
     
-    // Iniciar digitação se o vídeo já estiver pronto
-    if (video.readyState >= 3) {
-      setTimeout(startTyping, 1000);
+    // Se o vídeo já estiver carregado (readyState 4 = carregado completo)
+    if (video.readyState >= 4) {
+      // Se o vídeo já terminou, inicia digitação
+      if (video.currentTime >= video.duration) {
+        startTyping();
+      }
     }
+    
+    // Backup: inicia digitação após 5 segundos mesmo se o vídeo não terminar
+    setTimeout(startTyping, 5000);
+    
   } else {
     // Se não houver vídeo, iniciar digitação imediatamente
     setTimeout(startTyping, 1500);
@@ -104,6 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (video && scrollY < window.innerHeight) {
       const parallaxAmount = scrollY * 0.3;
       video.style.transform = `translateY(${parallaxAmount}px)`;
+      
+      // Se o usuário já rolou para baixo, pausa o vídeo
+      if (scrollY > 100 && !video.paused) {
+        video.pause();
+      }
     }
   });
 
@@ -150,16 +166,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }, revealOptions);
 
   // 7. OBSERVAR ELEMENTOS (SEM DUPLICAÇÃO)
-  // Observar apenas os elementos "folha", não os containers
   const revealTargets = document.querySelectorAll(
     '.reveal:not(.servicos-container):not(.galeria), ' +
     '.galeria img, ' +
     '.servico-item, ' +
-    '.footer-simple > *' // Observar filhos diretos do footer, não o container
+    '.footer-simple > *'
   );
   
   revealTargets.forEach(el => {
-    // Verificar se elemento já está visível inicialmente
     const rect = el.getBoundingClientRect();
     const isInViewport = rect.top < window.innerHeight && rect.bottom >= 0;
     
@@ -174,4 +188,21 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     window.dispatchEvent(new Event('scroll'));
   }, 100);
+
+  // 9. CONTROLE DE VÍDEO ADICIONAL
+  // Pausa o vídeo quando o usuário sai da página
+  document.addEventListener('visibilitychange', () => {
+    if (video && document.hidden) {
+      video.pause();
+    }
+  });
+
+  // Pausa o vídeo se o usuário rolar para baixo
+  let videoPausedByScroll = false;
+  window.addEventListener('scroll', () => {
+    if (video && window.scrollY > 300 && !video.paused && !videoPausedByScroll) {
+      video.pause();
+      videoPausedByScroll = true;
+    }
+  });
 });
