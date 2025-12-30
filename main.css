@@ -174,7 +174,7 @@ body {
   transition: all 0.8s ease;
 }
 
-.blob-overlay {
+.blob-inner {
   font-size: 1.8rem;
   color: rgba(255, 255, 255, 0.9);
   font-weight: bold;
@@ -563,7 +563,7 @@ body {
   }
   
   /* Ajustes para a bolha com imagem em mobile */
-  .blob-overlay {
+  .blob-inner {
     font-size: 1.5rem;
     letter-spacing: 2px;
   }
