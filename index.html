@@ -8,20 +8,24 @@
   <meta property="og:title" content="GEH Nails Designer | Arte & Essência">
   <meta property="og:image" content="preview.jpg">
   <meta name="theme-color" content="#3B1E54">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- CORREÇÃO: viewport mais compatível -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <link rel="stylesheet" href="main.css">
+  <!-- CORREÇÃO: Ordenação para prioridade e fallback -->
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-  <div class="cursor-dot"></div>
-  <div class="cursor-outline"></div>
-  <div class="grain-overlay"></div>
+  <!-- CORREÇÃO: Adicionado texto alternativo para leitores de tela -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-outline" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
 
   <section class="hero">
     <div class="video-container">
-      <video id="heroVideo" autoplay muted playsinline>
+      <!-- CORREÇÃO: Adicionado loop e preload para melhor experiência -->
+      <video id="heroVideo" autoplay muted playsinline loop preload="metadata">
         <source src="video1.mp4" type="video/mp4">
         Seu navegador não suporta vídeo.
       </video>
@@ -33,24 +37,26 @@
   </section>
 
   <!-- BOLHA DE TRANSIÇÃO SIMPLES (sem imagem) -->
-  <div class="transition-blob-container">
+  <div class="transition-blob-container" aria-hidden="true">
     <div class="floating-blob"></div>
   </div>
 
   <section class="intro">
     <h1 class="reveal-text">GEH Nails Designer</h1>
+    <!-- CORREÇÃO: Adicionado texto fallback para caso o JS não carregue -->
     <p class="typing-container">
-      <span class="typing"></span>
+      <span class="typing">Arte, técnica e personalidade</span>
     </p>
   </section>
 
   <section class="sobre-manifesto">
-    <div class="manifesto-bg-text">ESSÊNCIA</div>
+    <div class="manifesto-bg-text" aria-hidden="true">ESSÊNCIA</div>
     <div class="sobre-container">
       <!-- BOLHA ARTÍSTICA COM IMAGEM nails10.jpg -->
       <div class="sobre-visual artistic-blob">
         <div class="blob-image-container">
-          <img src="nails10.jpg" alt="GEH Nails" class="blob-image">
+          <!-- CORREÇÃO: Adicionados atributos de acessibilidade e loading -->
+          <img src="nails10.jpg" alt="GEH Nails - Detalhe de trabalho artístico em unhas" class="blob-image" loading="lazy" width="400" height="400">
           <div class="blob-inner">EST. 2025</div>
         </div>
       </div>
@@ -68,15 +74,16 @@
 
   <section class="galeria-container">
     <div class="galeria">
-      <img src="nails1.jpg" alt="Arte 1" loading="lazy">
-      <img src="nails2.jpg" alt="Arte 2" loading="lazy">
-      <img src="nails3.jpg" alt="Arte 3" loading="lazy">
-      <img src="nails4.jpg" alt="Arte 4" loading="lazy">
-      <img src="nails5.jpg" alt="Arte 5" loading="lazy">
-      <img src="nails6.jpg" alt="Arte 6" loading="lazy">
-      <img src="nails7.jpg" alt="Arte 7" loading="lazy">
-      <img src="nails8.jpg" alt="Arte 8" loading="lazy">
-      <img src="nails9.jpg" alt="Arte 9" loading="lazy">
+      <!-- CORREÇÃO: Adicionadas dimensões para layout mais estável -->
+      <img src="nails1.jpg" alt="Arte em unhas 1 - Design psicodélico" loading="lazy" width="300" height="400">
+      <img src="nails2.jpg" alt="Arte em unhas 2 - Detalhe rústico" loading="lazy" width="300" height="400">
+      <img src="nails3.jpg" alt="Arte em unhas 3 - Alongamento de fibra" loading="lazy" width="300" height="400">
+      <img src="nails4.jpg" alt="Arte em unhas 4 - Design geométrico" loading="lazy" width="300" height="400">
+      <img src="nails5.jpg" alt="Arte em unhas 5 - Arte em gel" loading="lazy" width="300" height="400">
+      <img src="nails6.jpg" alt="Arte em unhas 6 - Detalhe orgânico" loading="lazy" width="300" height="400">
+      <img src="nails7.jpg" alt="Arte em unhas 7 - Design minimalista" loading="lazy" width="300" height="400">
+      <img src="nails8.jpg" alt="Arte em unhas 8 - Trabalho artístico" loading="lazy" width="300" height="400">
+      <img src="nails9.jpg" alt="Arte em unhas 9 - Finalização premium" loading="lazy" width="300" height="400">
     </div>
   </section>
 
@@ -84,12 +91,12 @@
     <h2 class="menu-title">Menu de Serviços</h2>
     <div class="servicos-container premium-table">
       <!-- GRADIENTE FLUIDO NO FUNDO -->
-      <div class="table-glow"></div>
+      <div class="table-glow" aria-hidden="true"></div>
       
       <!-- SERVIÇOS COM ÍCONES -->
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
-          <span class="servico-icon">💎</span>
+          <span class="servico-icon" aria-hidden="true">💎</span>
           <span class="servico-nome">Alongamento de Fibra</span>
         </div>
         <div class="servico-divider"></div>
@@ -98,7 +105,7 @@
       
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
-          <span class="servico-icon">✨</span>
+          <span class="servico-icon" aria-hidden="true">✨</span>
           <span class="servico-nome">Manutenção de Fibra</span>
         </div>
         <div class="servico-divider"></div>
@@ -107,7 +114,7 @@
       
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
-          <span class="servico-icon">🌙</span>
+          <span class="servico-icon" aria-hidden="true">🌙</span>
           <span class="servico-nome">Banho de Gel</span>
         </div>
         <div class="servico-divider"></div>
@@ -116,7 +123,7 @@
       
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
-          <span class="servico-icon">💅</span>
+          <span class="servico-icon" aria-hidden="true">💅</span>
           <span class="servico-nome">Esmaltação em Gel</span>
         </div>
         <div class="servico-divider"></div>
@@ -130,9 +137,9 @@
       <p class="footer-tagline">Expressão em cada traço.</p>
       <div class="footer-info">
         <span>Araucária</span>
-        <div class="glass-divider"></div>
+        <div class="glass-divider" aria-hidden="true"></div>
         <span>Arte em Gel</span>
-        <div class="glass-divider"></div>
+        <div class="glass-divider" aria-hidden="true"></div>
         <span>Hora Marcada</span>
       </div>
       <span class="copyright">&copy; 2025 GEH Nails Designer. Todos os direitos reservados.</span>
@@ -141,11 +148,13 @@
 
   <div class="social-glass-container">
     <div class="social-glass-content">
-      <a href="https://wa.me/554196965591" class="glass-btn breath" target="_blank">WhatsApp</a>
-      <a href="https://instagram.com/g_nailsdesignerr" class="glass-btn breath" target="_blank">Instagram</a>
+      <!-- CORREÇÃO: Adicionado rel="noopener noreferrer" para segurança -->
+      <a href="https://wa.me/554196965591" class="glass-btn breath" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      <a href="https://instagram.com/g_nailsdesignerr" class="glass-btn breath" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <!-- CORREÇÃO: Script com defer para melhor performance -->
+  <script src="app.js" defer></script>
 </body>
 </html>
