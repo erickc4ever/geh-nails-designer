@@ -39,7 +39,7 @@
 
 .typing-container {
   min-height: 1.5em;
-  color: var(--primary-dark); /* Roxo Profundo */
+  color: var(--primary-dark);
   font-style: italic;
   font-family: serif;
 }
@@ -60,7 +60,7 @@
 
 .galeria img:hover {
   transform: scale(0.96) rotate(1deg) !important;
-  border-radius: 40px 10px !important; 
+  border-radius: 40px 10px !important;
   filter: saturate(1.3) brightness(1.1) !important;
   transition-duration: 0.3s !important;
 }
@@ -71,48 +71,47 @@
 }
 
 .cursor-dot {
-  width: 6px; 
+  width: 6px;
   height: 6px;
-  background: var(--accent-purple); /* Roxo Vibrante 9B7EBD */
-  position: fixed; 
+  background: var(--accent-purple);
+  position: fixed;
   pointer-events: none;
-  z-index: 10003; /* Acima da barra de progresso */
+  z-index: 10003;
   border-radius: 50%;
   mix-blend-mode: difference;
 }
 
 .cursor-outline {
-  width: 30px; 
+  width: 30px;
   height: 30px;
   border: 1px solid var(--accent-purple);
-  position: fixed; 
+  position: fixed;
   pointer-events: none;
-  z-index: 10002; /* Entre o dot e a barra */
+  z-index: 10002;
   border-radius: 50%;
   transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
 }
 
-/* 6. BARRA DE PROGRESSO DINÂMICA - ACIMA DA TEXTURA */
+/* 6. BARRA DE PROGRESSO DINÂMICA */
 body::before {
   content: "";
-  position: fixed; 
-  top: 0; 
+  position: fixed;
+  top: 0;
   left: 0;
-  height: 3px; 
-  background: var(--accent-purple); /* 9B7EBD */
+  height: 3px;
+  background: var(--accent-purple);
   width: var(--scroll-width, 0%);
-  z-index: 10001; /* Acima do grain-overlay (10000) */
+  z-index: 10001;
   box-shadow: 0 0 15px var(--accent-purple);
 }
 
-/* 7. REFINO DO FOOTER (LUXO NO ESCURO) */
+/* 7. REFINO DO FOOTER */
 .footer-simple {
-  position: relative; /* Garantir contexto para ::before */
-  overflow: hidden; /* Conter o GEH grande */
+  position: relative;
+  overflow: hidden;
 }
 
 .footer-simple .footer-tagline {
-  /* Gradiente usando a nova paleta: Profundo -> Vibrante -> Gelo */
   background: linear-gradient(90deg, var(--accent-purple), var(--pure-light), var(--accent-purple));
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -123,53 +122,93 @@ body::before {
 
 .footer-simple::before {
   content: "GEH";
-  position: absolute; 
-  bottom: -20px; 
+  position: absolute;
+  bottom: -20px;
   right: -20px;
-  font-size: 15vw; 
+  font-size: 15vw;
   font-weight: 900;
-  color: var(--accent-purple); 
-  opacity: 0.05; 
+  color: var(--accent-purple);
+  opacity: 0.05;
   pointer-events: none;
   filter: blur(4px);
-  z-index: 1; /* Atrás do conteúdo */
+  z-index: 1;
+}
+
+/* 8. BOTÕES SOCIAIS - CORREÇÃO DE FONTE */
+.social-glass-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.glass-btn {
+  color: var(--pure-light);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.75rem !important;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(155, 126, 189, 0.2);
+  border: 1px solid rgba(155, 126, 189, 0.3);
+}
+
+.glass-btn:hover {
+  background: rgba(155, 126, 189, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Remover divisores antigos dos botões */
+.social-glass-content .glass-divider {
+  display: none;
 }
 
 /* RESPONSIVIDADE */
 @media (max-width: 768px) {
-  .cursor-dot, 
-  .cursor-outline { 
-    display: none; 
+  .cursor-dot,
+  .cursor-outline {
+    display: none;
   }
   
-  body, 
-  a, 
-  .galeria img, 
-  button, 
-  .glass-btn { 
-    cursor: auto !important; /* Forçar cursor visível em mobile */
+  body,
+  a,
+  .galeria img,
+  button,
+  .glass-btn {
+    cursor: auto !important;
   }
   
-  .footer-simple::before { 
-    font-size: 10rem; 
-    bottom: -10px; 
-    right: -10px; 
+  .footer-simple::before {
+    font-size: 10rem;
+    bottom: -10px;
+    right: -10px;
   }
   
-  /* Otimizar animações em mobile */
   .galeria img:hover {
-    transform: scale(0.98) !important; /* Efeito mais sutil */
+    transform: scale(0.98) !important;
     border-radius: 20px 5px !important;
+  }
+  
+  /* Botões em mobile */
+  .social-glass-content {
+    gap: 10px;
+  }
+  
+  .glass-btn {
+    font-size: 0.65rem !important;
+    padding: 6px 12px;
   }
 }
 
-/* CURSOR APENAS PARA DISPOSITIVOS COM PONTEIRO PRECISO */
+/* CURSOR APENAS PARA DESKTOP */
 @media (pointer: fine) and (min-width: 769px) {
-  body, 
-  a, 
-  .galeria img, 
-  button, 
-  .glass-btn { 
-    cursor: none; 
+  body,
+  a,
+  .galeria img,
+  button,
+  .glass-btn {
+    cursor: none;
   }
 }
