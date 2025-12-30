@@ -1,11 +1,14 @@
-/* GEH NAILS - MAIN.CSS */
+/* GEH NAILS - MAIN.CSS 
+   VERSÃO: HARMONIA CROMÁTICA E CENTRALIZAÇÃO TOTAL
+*/
 
 :root {
   --dark-purple: #A294F9;
   --medium-purple: #CDC1FF;
   --light-purple: #E5D9F2;
   --base-white: #F5EFFF;
-  --sunset-gradient: linear-gradient(135deg, #F5EFFF 0%, #E5D9F2 50%, #CDC1FF 100%);
+  /* Gradiente ajustado para começar no escuro e abrir no lilás */
+  --sunset-gradient: linear-gradient(to bottom, #000 0%, #0d0d0d 5%, #F5EFFF 40%, #F5EFFF 100%);
   --text-main: #2D2A32;
   --glass-bg: rgba(245, 239, 255, 0.4);
 }
@@ -74,50 +77,73 @@ body {
   letter-spacing: -5px;
 }
 
-/* MANIFESTO */
+/* INTRO - Ponte de respiro entre o vídeo e o conteúdo claro */
+.intro {
+  padding: 140px 20px;
+  background: #000; /* Fusão perfeita com o vídeo */
+  color: #fff;
+  text-align: center;
+}
+
+/* MANIFESTO - Centralizado e com transição de cor */
 .sobre-manifesto {
-  padding: 100px 5%;
+  padding: 120px 5%;
   background: var(--sunset-gradient);
   position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.manifesto-bg-text {
+  position: absolute;
+  font-size: 25vw;
+  font-weight: 900;
+  color: var(--dark-purple);
+  opacity: 0.05;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%); /* Centralizado ao fundo */
+  pointer-events: none;
 }
 
 .sobre-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  display: flex;
+  flex-direction: column; /* Um abaixo do outro para simetria central */
   align-items: center;
-  max-width: 1200px;
+  text-align: center;
+  gap: 60px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 .artistic-blob {
-  width: 100%;
-  height: 400px;
+  width: 320px;
+  height: 320px;
   background: var(--glass-bg);
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--medium-purple);
+  box-shadow: 0 20px 40px rgba(162, 148, 249, 0.1);
 }
 
 .section-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
   color: var(--dark-purple);
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-/* GRID 3x3 */
+/* GRID 3x3 FIXO */
 .galeria-container {
   background: #000;
-  padding: 20px;
+  padding: 80px 20px;
 }
 
 .galeria {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  max-width: 1200px;
+  grid-template-columns: repeat(3, 1fr); /* 3 Colunas fixas no Desktop */
+  gap: 15px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -129,16 +155,27 @@ body {
 }
 
 /* SERVIÇOS */
-.servicos { padding: 80px 5%; }
+.servicos { 
+  padding: 100px 5%; 
+  background-color: var(--base-white);
+}
 
 .servicos-container {
   max-width: 600px;
   margin: 0 auto;
   background: var(--glass-bg);
   backdrop-filter: blur(15px);
-  padding: 40px;
-  border-radius: 8px;
+  padding: 50px 40px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.menu-title {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--dark-purple);
+  text-transform: uppercase;
+  letter-spacing: 4px;
 }
 
 .servico-item {
@@ -151,61 +188,75 @@ body {
 .servico-linha {
   flex: 1;
   border-bottom: 1px dotted var(--dark-purple);
-  margin: 0 10px;
-  opacity: 0.5;
+  margin: 0 15px;
+  opacity: 0.4;
 }
 
-/* FOOTER */
+/* FOOTER COMPLEMENTAR NEGRO */
 .footer-simple {
-  padding: 60px 20px;
+  padding: 100px 20px 140px;
+  background: #000; /* Fechamento harmônico */
+  color: #fff;
   text-align: center;
   position: relative;
+}
+
+.footer-tagline {
+  font-style: italic;
+  font-size: 1.4rem;
+  margin-bottom: 30px;
+  color: var(--medium-purple);
 }
 
 .footer-info {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 20px;
   font-size: 0.8rem;
   text-transform: uppercase;
-  margin: 20px 0;
+  letter-spacing: 2px;
+  opacity: 0.8;
 }
 
 /* SOCIAL */
 .social-glass-container {
   position: fixed;
-  bottom: 20px; left: 50%;
+  bottom: 30px; left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
 }
 
 .social-glass-content {
   display: flex;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  padding: 10px 25px;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.6); /* Mais escuro para destacar no fundo claro */
+  backdrop-filter: blur(12px);
+  padding: 12px 30px;
+  border-radius: 40px;
+  border: 1px solid rgba(162, 148, 249, 0.3);
 }
 
 .glass-btn {
   text-decoration: none;
-  color: var(--text-main);
-  font-size: 0.75rem;
+  color: #fff;
+  font-size: 0.8rem;
   font-weight: bold;
   letter-spacing: 1px;
 }
 
 .glass-divider {
-  width: 1px; background: var(--dark-purple);
-  margin: 0 15px;
+  width: 1px; 
+  height: 15px;
+  background: var(--dark-purple);
+  margin: 0 20px;
 }
 
 /* RESPONSIVIDADE */
 @media (max-width: 768px) {
-  .sobre-container { grid-template-columns: 1fr; }
-  .galeria { grid-template-columns: repeat(2, 1fr); } /* 2 colunas no celular para visibilidade */
-  .footer-info { flex-direction: column; gap: 10px; }
+  .sobre-container { gap: 30px; }
+  .galeria { grid-template-columns: repeat(2, 1fr); } /* 2 colunas para mobile */
+  .footer-info { flex-direction: column; gap: 15px; }
   .hero-logo-text { font-size: 5rem; }
-  .artistic-blob { height: 300px; }
+  .artistic-blob { width: 260px; height: 260px; }
+  .intro { padding: 100px 20px; }
 }
