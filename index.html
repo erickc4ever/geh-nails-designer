@@ -8,29 +8,250 @@
   <meta property="og:title" content="GEH Nails Designer | Arte & Essência">
   <meta property="og:image" content="preview.jpg">
   <meta name="theme-color" content="#3B1E54">
-  <!-- CORREÇÃO: viewport mais compatível -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- CORREÇÃO: Ordenação para prioridade e fallback -->
+  <!-- Fontes experimentais e psicodélicas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;500;600;700&family=Unica+One&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="main.css">
+  
+  <style>
+    /* Override para tipografia experimental */
+    .hero-logo-text {
+      font-family: 'Unica One', monospace;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      position: relative;
+    }
+    
+    .hero-logo-text::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+      bottom: -15px;
+      left: 0;
+      opacity: 0.6;
+    }
+    
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      font-feature-settings: "salt" on;
+    }
+    
+    .reveal-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    
+    .typing, .manifesto-content p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      line-height: 1.8;
+    }
+    
+    .highlight {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      font-style: normal;
+      position: relative;
+      padding-left: 20px;
+    }
+    
+    .highlight::before {
+      content: '//';
+      position: absolute;
+      left: 0;
+      color: var(--accent-purple);
+      opacity: 0.6;
+    }
+    
+    /* Ícones minimalistas em CSS puro */
+    .servico-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      position: relative;
+      background: transparent;
+    }
+    
+    .servico-icon::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--soft-purple);
+      border-radius: 50%;
+      opacity: 0.6;
+      transition: all 0.4s ease;
+    }
+    
+    .servico-icon::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-purple);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .luxury-item:hover .servico-icon::before {
+      transform: scale(1.2);
+      border-color: var(--accent-purple);
+      opacity: 1;
+    }
+    
+    .luxury-item:hover .servico-icon::after {
+      opacity: 1;
+    }
+    
+    /* Diferenciação por serviço com formas geométricas */
+    .servico-item:nth-child(1) .servico-icon::before { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    .servico-item:nth-child(2) .servico-icon::before { border-radius: 50% 50% 50% 0; transform: rotate(45deg); }
+    .servico-item:nth-child(3) .servico-icon::before { border-radius: 10px 30px 10px 30px; }
+    .servico-item:nth-child(4) .servico-icon::before { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    
+    .servico-item:nth-child(1) .servico-icon::after { border-radius: 2px; transform: translate(-50%, -50%) rotate(45deg); }
+    .servico-item:nth-child(2) .servico-icon::after { border-radius: 0; width: 8px; height: 8px; }
+    .servico-item:nth-child(3) .servico-icon::after { border-radius: 1px; width: 8px; height: 3px; }
+    .servico-item:nth-child(4) .servico-icon::after { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    
+    /* Footer com tipografia experimental */
+    .footer-tagline {
+      font-family: 'Unica One', monospace;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      position: relative;
+    }
+    
+    .footer-tagline::before,
+    .footer-tagline::after {
+      content: '◆';
+      position: absolute;
+      color: var(--accent-purple);
+      opacity: 0.3;
+      font-size: 0.8em;
+    }
+    
+    .footer-tagline::before {
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    .footer-tagline::after {
+      right: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    .footer-info span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      position: relative;
+    }
+    
+    .copyright {
+      font-family: 'Space Grotesk', monospace;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      font-size: 0.7rem;
+      opacity: 0.4;
+    }
+    
+    /* Botões com estética synthwave/psicodélica */
+    .glass-btn {
+      font-family: 'Unica One', monospace;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .glass-btn:hover::before {
+      left: 100%;
+    }
+    
+    /* Efeito de distorção sutil no título */
+    .reveal-text {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .reveal-text::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 2px;
+      top: 0;
+      color: var(--accent-purple);
+      opacity: 0.3;
+      filter: blur(1px);
+      z-index: -1;
+      transform: translate(1px, 1px);
+    }
+    
+    /* Responsividade da tipografia */
+    @media (max-width: 768px) {
+      .hero-logo-text {
+        letter-spacing: 0.1em;
+      }
+      
+      .reveal-text {
+        letter-spacing: 0.05em;
+        font-size: 2.2rem;
+      }
+      
+      .footer-tagline::before,
+      .footer-tagline::after {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- CORREÇÃO: Adicionado texto alternativo para leitores de tela -->
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-outline" aria-hidden="true"></div>
   <div class="grain-overlay" aria-hidden="true"></div>
 
   <section class="hero">
     <div class="video-container">
-      <!-- CORREÇÃO: Adicionado loop e preload para melhor experiência -->
       <video id="heroVideo" autoplay muted playsinline loop preload="metadata">
         <source src="video1.mp4" type="video/mp4">
         Seu navegador não suporta vídeo.
       </video>
       <div class="hero-content">
-        <h1 class="hero-logo-text">GEH</h1>
+        <h1 class="hero-logo-text" data-text="GEH">GEH</h1>
         <span class="hero-subtitle">Transformando unhas em obras de arte</span>
       </div>
     </div>
@@ -42,8 +263,7 @@
   </div>
 
   <section class="intro">
-    <h1 class="reveal-text">GEH Nails Designer</h1>
-    <!-- CORREÇÃO: Adicionado texto fallback para caso o JS não carregue -->
+    <h1 class="reveal-text" data-text="GEH Nails Designer">GEH Nails Designer</h1>
     <p class="typing-container">
       <span class="typing">Arte, técnica e personalidade</span>
     </p>
@@ -55,7 +275,6 @@
       <!-- BOLHA ARTÍSTICA COM IMAGEM nails10.jpg -->
       <div class="sobre-visual artistic-blob">
         <div class="blob-image-container">
-          <!-- CORREÇÃO: Adicionados atributos de acessibilidade e loading -->
           <img src="nails10.jpg" alt="GEH Nails - Detalhe de trabalho artístico em unhas" class="blob-image" loading="lazy" width="400" height="400">
           <div class="blob-inner">EST. 2025</div>
         </div>
@@ -74,7 +293,6 @@
 
   <section class="galeria-container">
     <div class="galeria">
-      <!-- CORREÇÃO: Adicionadas dimensões para layout mais estável -->
       <img src="nails1.jpg" alt="Arte em unhas 1 - Design psicodélico" loading="lazy" width="300" height="400">
       <img src="nails2.jpg" alt="Arte em unhas 2 - Detalhe rústico" loading="lazy" width="300" height="400">
       <img src="nails3.jpg" alt="Arte em unhas 3 - Alongamento de fibra" loading="lazy" width="300" height="400">
@@ -90,13 +308,12 @@
   <section class="servicos">
     <h2 class="menu-title">Menu de Serviços</h2>
     <div class="servicos-container premium-table">
-      <!-- GRADIENTE FLUIDO NO FUNDO -->
       <div class="table-glow" aria-hidden="true"></div>
       
-      <!-- SERVIÇOS COM ÍCONES -->
+      <!-- SERVIÇOS COM ÍCONES GEOMÉTRICOS -->
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
-          <span class="servico-icon" aria-hidden="true">💎</span>
+          <span class="servico-icon" aria-hidden="true"></span>
           <span class="servico-nome">Alongamento de Fibra</span>
         </div>
         <div class="servico-divider"></div>
@@ -105,7 +322,7 @@
       
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
-          <span class="servico-icon" aria-hidden="true">✨</span>
+          <span class="servico-icon" aria-hidden="true"></span>
           <span class="servico-nome">Manutenção de Fibra</span>
         </div>
         <div class="servico-divider"></div>
@@ -114,7 +331,7 @@
       
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
-          <span class="servico-icon" aria-hidden="true">🌙</span>
+          <span class="servico-icon" aria-hidden="true"></span>
           <span class="servico-nome">Banho de Gel</span>
         </div>
         <div class="servico-divider"></div>
@@ -123,7 +340,7 @@
       
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
-          <span class="servico-icon" aria-hidden="true">💅</span>
+          <span class="servico-icon" aria-hidden="true"></span>
           <span class="servico-nome">Esmaltação em Gel</span>
         </div>
         <div class="servico-divider"></div>
@@ -148,13 +365,11 @@
 
   <div class="social-glass-container">
     <div class="social-glass-content">
-      <!-- CORREÇÃO: Adicionado rel="noopener noreferrer" para segurança -->
       <a href="https://wa.me/554196965591" class="glass-btn breath" target="_blank" rel="noopener noreferrer">WhatsApp</a>
       <a href="https://instagram.com/g_nailsdesignerr" class="glass-btn breath" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </div>
 
-  <!-- CORREÇÃO: Script com defer para melhor performance -->
   <script src="app.js" defer></script>
 </body>
 </html>
