@@ -1,5 +1,5 @@
 /* GEH NAILS - APP.JS 
-   VERSÃO: CONGELAMENTO DO FRAME FINAL - OTIMIZADO
+   VERSÃO: CONGELAMENTO DO FRAME FINAL - CORRIGIDO
 */
 
 // Variáveis globais para otimização de performance
@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Flag para controlar se vídeo já terminou
   let videoEnded = false;
+  
+  // Flag para saber se é primeira visita nesta página
+  let isFirstVisit = !sessionStorage.getItem('videoEnded');
 
   // 2. EFEITO DE DIGITAÇÃO (RITMO HUMANO) - OTIMIZADO
   const typeEffect = () => {
@@ -39,28 +42,30 @@ document.addEventListener("DOMContentLoaded", () => {
     typeNextChar();
   };
 
-  // 3. GESTÃO DO VÍDEO - CONGELAMENTO NO FRAME FINAL (OTIMIZADO)
+  // 3. GESTÃO DO VÍDEO - CONGELAMENTO NO FRAME FINAL (CORRIGIDO)
   const handleVideoEnd = () => {
     if (video && !videoEnded) {
       videoEnded = true;
       
       // Usar requestAnimationFrame para sincronização visual
       requestAnimationFrame(() => {
-        // 1. Pausa o vídeo
-        video.pause();
+        // 1. Vai para 0.2 segundos antes do final (frame da logo)
+        video.currentTime = Math.max(0, video.duration - 0.2);
         
-        // 2. Vai para o frame final (último segundo)
-        // Se o vídeo tem 3s, vai para 2.9s para pegar o frame da logo
-        video.currentTime = Math.max(0, video.duration - 0.1);
+        // 2. Pausa o vídeo
+        video.pause();
         
         // 3. Desabilita completamente os controles
         video.controls = false;
         video.removeAttribute('autoplay');
         
-        // 4. Inicia a digitação
+        // 4. Remove o atributo loop (não precisa mais)
+        video.removeAttribute('loop');
+        
+        // 5. Inicia a digitação
         startTyping();
         
-        console.log("Vídeo congelado no frame final com logo");
+        console.log("Vídeo congelado 0.2s antes do final (frame da logo)");
       });
     }
   };
@@ -74,60 +79,96 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // 5. CONFIGURAÇÃO DO VÍDEO (OTIMIZADO)
+  // 5. CONFIGURAÇÃO DO VÍDEO (CORRIGIDA)
   const initVideo = () => {
     if (video) {
-      // Remove autoplay se já tiver terminado em sessão anterior
-      if (sessionStorage.getItem('videoEnded')) {
+      console.log("Inicializando vídeo...");
+      console.log("Primeira visita?", isFirstVisit);
+      console.log("Duração do vídeo:", video.duration);
+      
+      // Se NÃO for primeira visita (já viu o vídeo antes)
+      if (!isFirstVisit) {
+        console.log("Já viu vídeo antes - mostrando frame final");
+        // Apenas prepara o vídeo no frame final
         video.removeAttribute('autoplay');
-        video.currentTime = video.duration - 0.1; // Vai direto para o frame final
-        video.pause();
+        video.removeAttribute('loop');
+        video.controls = false;
+        
+        // Aguarda metadados para saber a duração
+        if (video.duration && video.duration > 0) {
+          video.currentTime = video.duration - 0.2; // 0.2s antes do final
+          video.pause();
+        } else {
+          // Se não tem duração ainda, espera loadedmetadata
+          video.addEventListener('loadedmetadata', () => {
+            video.currentTime = video.duration - 0.2;
+            video.pause();
+          }, { once: true });
+        }
+        
         startTyping();
         videoEnded = true;
+        
       } else {
-        // Primeira vez - toca o vídeo
-        video.play().catch((error) => {
-          console.log("Aguardando interação ou erro no play:", error);
-          // Se não conseguir tocar, inicia digitação
-          startTyping();
-        });
-      }
-      
-      // Monitora o tempo do vídeo - OTIMIZADO: throttle no timeupdate
-      let lastTimeUpdate = 0;
-      const videoTimeUpdateHandler = () => {
-        const now = Date.now();
-        // Throttle para melhor performance (executa no máximo a cada 100ms)
-        if (now - lastTimeUpdate > 100) {
-          lastTimeUpdate = now;
-          // Se estiver nos últimos 0.5 segundos, prepara para congelar
-          if (video.currentTime >= video.duration - 0.5 && !videoEnded) {
+        // PRIMEIRA VISITA - toca o vídeo completo
+        console.log("Primeira visita - tocando vídeo completo");
+        
+        // Remove loop do HTML para tocar apenas uma vez
+        video.removeAttribute('loop');
+        
+        // Tenta tocar o vídeo
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log("Vídeo começou a tocar");
+            // Monitora o tempo do vídeo para congelar 0.2s antes do final
+            const videoTimeUpdateHandler = () => {
+              // Se estiver nos últimos 0.2 segundos, congela
+              if (video.currentTime >= video.duration - 0.2 && !videoEnded) {
+                console.log("Congelando vídeo nos últimos 0.2s");
+                handleVideoEnd();
+                sessionStorage.setItem('videoEnded', 'true');
+                video.removeEventListener('timeupdate', videoTimeUpdateHandler);
+              }
+            };
+            
+            video.addEventListener('timeupdate', videoTimeUpdateHandler);
+            
+          }).catch((error) => {
+            console.log("Erro ao tocar vídeo:", error);
+            // Se não conseguir tocar, inicia digitação
+            startTyping();
+          });
+        }
+        
+        // Backup: se o evento 'ended' não disparar
+        video.addEventListener('ended', () => {
+          console.log("Evento 'ended' disparado");
+          if (!videoEnded) {
             handleVideoEnd();
             sessionStorage.setItem('videoEnded', 'true');
           }
-        }
-      };
+        }, { once: true });
+      }
       
-      video.addEventListener('timeupdate', videoTimeUpdateHandler);
-      
-      // Backup: se o evento 'ended' não disparar
-      video.addEventListener('ended', handleVideoEnd);
-      
-      // Backup de segurança: inicia digitação após 3 segundos (reduzido de 4s)
+      // Backup de segurança: inicia digitação após 4 segundos
       setTimeout(() => {
         if (!typingStarted) {
+          console.log("Backup: iniciando digitação após timeout");
           startTyping();
         }
-      }, 3000);
+      }, 4000);
       
     } else {
       // Se não houver vídeo, inicia digitação
+      console.log("Nenhum vídeo encontrado, iniciando digitação");
       setTimeout(startTyping, 800);
     }
   };
 
-  // Inicializar vídeo
-  initVideo();
+  // Inicializar vídeo (com pequeno delay para garantir DOM carregado)
+  setTimeout(initVideo, 100);
 
   // 6. CURSOR MAGNÉTICO (DESKTOP) - MANTIDO E OTIMIZADO
   const initCursor = () => {
@@ -318,23 +359,40 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// 12. RESETA APÓS 30 MINUTOS (reduzido de 1 hora)
+// 12. RESETA APÓS 5 MINUTOS (reduzido de 30 minutos para testes)
 setTimeout(() => {
   sessionStorage.removeItem('videoEnded');
-}, 1800000); // 30 minutos em milissegundos
+  console.log("SessionStorage resetado após 5 minutos");
+}, 300000); // 5 minutos em milissegundos
 
 // 13. FUNÇÃO DE DEBUG PARA DESENVOLVIMENTO
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
   window.debugGEH = {
     resetVideo: () => {
       sessionStorage.removeItem('videoEnded');
+      console.log("Resetando vídeo... recarregando página");
       location.reload();
     },
     showAllTexts: () => {
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
       document.querySelectorAll('.luxury-item').forEach(el => el.classList.add('visible'));
       document.querySelectorAll('.galeria img').forEach(el => el.classList.add('visible'));
+      console.log("Todos textos revelados");
+    },
+    getVideoStatus: () => {
+      const video = document.getElementById("heroVideo");
+      return {
+        duration: video?.duration,
+        currentTime: video?.currentTime,
+        paused: video?.paused,
+        ended: video?.ended,
+        sessionStorage: sessionStorage.getItem('videoEnded')
+      };
     }
   };
   console.log('GEH Debug: window.debugGEH disponível');
+  console.log('Comandos disponíveis:');
+  console.log('- debugGEH.resetVideo() - Reseta e recarrega');
+  console.log('- debugGEH.showAllTexts() - Mostra todos textos');
+  console.log('- debugGEH.getVideoStatus() - Status do vídeo');
 }
