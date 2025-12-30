@@ -84,6 +84,16 @@ body {
   letter-spacing: -5px;
 }
 
+/* Subtítulo do Hero (estava faltando) */
+.hero-subtitle {
+  color: var(--pure-light);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  margin-top: -20px;
+  opacity: 0.9;
+  font-style: italic;
+}
+
 /* BOLHA DE TRANSIÇÃO SIMPLES */
 .transition-blob-container {
   width: 100%;
@@ -118,6 +128,31 @@ body {
   justify-content: center;
 }
 
+/* Texto revelado (estava faltando) */
+.reveal-text {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  color: var(--pure-light);
+  margin-bottom: 30px;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Container de digitação (estava faltando) */
+.typing-container {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typing {
+  color: var(--soft-purple);
+  font-size: 1.3rem;
+  font-style: italic;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
 /* MANIFESTO */
 .sobre-manifesto {
   padding: 120px 5%;
@@ -129,6 +164,21 @@ body {
   justify-content: center;
   text-align: center;
   color: var(--text-on-dark);
+}
+
+/* Texto de fundo ESSÊNCIA (estava faltando) */
+.manifesto-bg-text {
+  position: absolute;
+  font-size: 25vw;
+  color: rgba(255, 255, 255, 0.03);
+  font-weight: 900;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 10px;
 }
 
 .sobre-container {
@@ -229,11 +279,33 @@ body {
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   color: var(--pure-light);
   margin-bottom: 20px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+/* Parágrafos reveláveis (estavam faltando) */
+.reveal {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .manifesto-content p {
-  color: var(--soft-purple);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Texto destacado (estava faltando) */
+.highlight {
+  color: var(--accent-purple);
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.2rem;
+  margin-top: 30px;
+  padding: 15px;
+  border-left: 2px solid var(--accent-purple);
 }
 
 /* GALERIA */
@@ -482,6 +554,21 @@ body {
   opacity: 0.6;
 }
 
+/* Copyright (estava faltando estilo) */
+.copyright {
+  margin-top: 40px;
+  font-size: 0.8rem;
+  opacity: 0.5;
+  letter-spacing: 1px;
+}
+
+/* Divisor de vidro (estava faltando) */
+.glass-divider {
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
 /* BOTÃO FLUTUANTE - FONTE DIMINUÍDA */
 .social-glass-container {
   position: fixed;
@@ -521,6 +608,11 @@ body {
   opacity: 0.7;
 }
 
+/* Botão com efeito breath (estava faltando) */
+.breath {
+  animation: breath 3s ease-in-out infinite;
+}
+
 /* RESPONSIVIDADE */
 @media (max-width: 768px) {
   .galeria {
@@ -537,6 +629,11 @@ body {
     font-size: 5rem;
   }
   
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-top: -10px;
+  }
+  
   .artistic-blob {
     width: 250px;
     height: 250px;
@@ -546,6 +643,11 @@ body {
     width: 150px;
     height: 150px;
     top: -75px;
+  }
+  
+  .manifesto-bg-text {
+    font-size: 30vw;
+    letter-spacing: 5px;
   }
   
   .footer-info {
@@ -590,6 +692,14 @@ body {
     margin-top: 5px;
     font-size: 1.1rem !important;
     padding: 5px 15px !important;
+  }
+  
+  .reveal-text {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+  
+  .typing {
+    font-size: 1.1rem;
   }
 }
 
