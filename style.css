@@ -1,5 +1,6 @@
 /* GEH NAILS - STYLE.CSS 
    VERSÃO: REFINAMENTO DE INTERAÇÃO E NOVO CONTRASTE DE LUXO
+   CORREÇÃO: VISIBILIDADE DOS TEXTOS MANTIDA
 */
 
 /* 1. ANIMAÇÕES (KEYFRAMES) */
@@ -22,14 +23,17 @@
   to { background-position: 200% center; }
 }
 
-/* 2. SISTEMA DE REVELAÇÃO (JS TRIGGER) */
+/* 2. SISTEMA DE REVELAÇÃO (JS TRIGGER) - CORRIGIDO */
+/* FALLBACK: Texto visível mesmo sem JS */
 .reveal {
-  opacity: 0;
-  transition: opacity 1s ease;
+  opacity: 1; /* CORREÇÃO: VISÍVEL POR PADRÃO */
+  transition: opacity 1s ease, transform 1s ease;
 }
 
+/* Quando JS adicionar .visible, anima */
 .reveal.visible {
   animation: liquidReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 1; /* Garante visibilidade */
 }
 
 /* 3. HERO & TEXTO */
@@ -42,20 +46,23 @@
   color: var(--pure-light);
   font-style: italic;
   font-family: serif;
+  opacity: 1; /* CORREÇÃO: VISÍVEL */
 }
 
-/* 4. GALERIA & INTERAÇÃO ARTÍSTICA - SOBRESCREVENDO MAIN.CSS */
+/* 4. GALERIA & INTERAÇÃO ARTÍSTICA - CORRIGIDO */
+/* FALLBACK: Imagens visíveis mesmo sem JS */
 .galeria img {
-  opacity: 0 !important;
-  transform: scale(1.05) !important;
+  opacity: 1 !important; /* CORREÇÃO: VISÍVEL POR PADRÃO */
+  transform: scale(1) !important; /* CORREÇÃO: TAMANHO NORMAL */
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1),
               filter 0.5s ease !important;
   will-change: transform, opacity, filter;
 }
 
+/* Quando JS adicionar .visible, aplica animação de entrada */
 .galeria img.visible {
+  animation: liquidReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 1 !important;
-  transform: scale(1) !important;
 }
 
 .galeria img:hover {
@@ -134,16 +141,19 @@ body::before {
   z-index: 1;
 }
 
-/* 8. REFINAMENTO DA TABELA PREMIUM */
+/* 8. REFINAMENTO DA TABELA PREMIUM - CORRIGIDO */
+/* FALLBACK: Itens visíveis mesmo sem JS */
 .luxury-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1; /* CORREÇÃO: VISÍVEL POR PADRÃO */
+  transform: translateY(0); /* CORREÇÃO: POSIÇÃO NORMAL */
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
+/* Quando JS adicionar .visible, aplica animação de entrada */
 .luxury-item.visible {
+  animation: liquidReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 1;
-  transform: translateY(0);
 }
 
 /* Efeito de cursor magnético nos itens da tabela */
@@ -165,6 +175,17 @@ body::before {
 
 .luxury-item:hover .servico-icon {
   animation-duration: 2s;
+}
+
+/* 9. SELEÇÃO DE TEXTO ESTILIZADA */
+::selection {
+  background: rgba(155, 126, 189, 0.3);
+  color: var(--pure-light);
+}
+
+::-moz-selection {
+  background: rgba(155, 126, 189, 0.3);
+  color: var(--pure-light);
 }
 
 /* RESPONSIVIDADE */
@@ -202,6 +223,15 @@ body::before {
   .luxury-item:hover .servico-icon {
     animation: none;
   }
+  
+  /* Ajuste das animações em mobile */
+  .reveal.visible {
+    animation-duration: 1s;
+  }
+  
+  .luxury-item.visible {
+    animation-duration: 0.4s;
+  }
 }
 
 /* CURSOR APENAS PARA DESKTOP */
@@ -214,4 +244,31 @@ body::before {
   .luxury-item {
     cursor: none;
   }
+}
+
+/* 10. LOADING GRACEFUL (caso JS demore) */
+/* Se o JS não carregar, elementos ficam visíveis após 3 segundos */
+@keyframes graceful-appear {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Se a classe .js-loading for adicionada no body inicialmente */
+body.js-loading .reveal,
+body.js-loading .luxury-item,
+body.js-loading .galeria img {
+  opacity: 1 !important; /* Override para visibilidade */
+  animation: graceful-appear 0.5s ease forwards;
+}
+
+/* Remove loading state quando JS carrega */
+body.js-loaded .reveal,
+body.js-loaded .luxury-item,
+body.js-loaded .galeria img {
+  opacity: 0; /* Volta ao estado inicial para animação JS */
+}
+
+body.js-loaded .reveal.visible,
+body.js-loaded .luxury-item.visible,
+body.js-loaded .galeria img.visible {
+  opacity: 1; /* JS controla a visibilidade */
 }
