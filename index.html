@@ -7,7 +7,8 @@
   <meta name="description" content="GEH Nails Designer - Especialista em alongamento de fibra e arte em gel. Psicodelia rústica e movimento orgânico.">
   <meta property="og:title" content="GEH Nails Designer | Arte & Essência">
   <meta property="og:image" content="preview.jpg">
-  <meta name="theme-color" content="#3B1E54"> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#3B1E54">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="style.css">
@@ -20,16 +21,21 @@
 
   <section class="hero">
     <div class="video-container">
-      <video id="heroVideo" autoplay muted loop playsinline> <source src="video1.mp4" type="video/mp4">
+      <video id="heroVideo" autoplay muted loop playsinline>
+        <source src="video1.mp4" type="video/mp4">
         Seu navegador não suporta vídeo.
       </video>
-      <div class="video-overlay"></div>
       <div class="hero-content">
         <h1 class="hero-logo-text">GEH</h1>
         <span class="hero-subtitle">Transformando unhas em obras de arte</span>
       </div>
     </div>
   </section>
+
+  <!-- BOLHA DE TRANSIÇÃO (posicionada corretamente após o hero) -->
+  <div class="transition-blob-container">
+    <div class="floating-blob"></div>
+  </div>
 
   <section class="intro">
     <h1 class="reveal-text">GEH Nails Designer</h1>
@@ -38,10 +44,9 @@
     </p>
   </section>
 
-  <section class="sobre-manifesto reveal">
+  <section class="sobre-manifesto">
     <div class="manifesto-bg-text">ESSÊNCIA</div>
     <div class="sobre-container">
-      
       <div class="sobre-visual artistic-blob">
         <div class="blob-inner">EST. 2025</div>
       </div>
@@ -59,50 +64,48 @@
 
   <section class="galeria-container">
     <div class="galeria">
-      <img src="nails1.jpg" alt="Arte 1" class="reveal">
-      <img src="nails2.jpg" alt="Arte 2" class="reveal" loading="lazy">
-      <img src="nails3.jpg" alt="Arte 3" class="reveal" loading="lazy">
-      <img src="nails4.jpg" alt="Arte 4" class="reveal" loading="lazy">
-      <img src="nails5.jpg" alt="Arte 5" class="reveal" loading="lazy">
-      <img src="nails6.jpg" alt="Arte 6" class="reveal" loading="lazy">
-      <img src="nails7.jpg" alt="Arte 7" class="reveal" loading="lazy">
-      <img src="nails8.jpg" alt="Arte 8" class="reveal" loading="lazy">
-      <img src="nails9.jpg" alt="Arte 9" class="reveal" loading="lazy">
+      <img src="nails1.jpg" alt="Arte 1" loading="lazy">
+      <img src="nails2.jpg" alt="Arte 2" loading="lazy">
+      <img src="nails3.jpg" alt="Arte 3" loading="lazy">
+      <img src="nails4.jpg" alt="Arte 4" loading="lazy">
+      <img src="nails5.jpg" alt="Arte 5" loading="lazy">
+      <img src="nails6.jpg" alt="Arte 6" loading="lazy">
+      <img src="nails7.jpg" alt="Arte 7" loading="lazy">
+      <img src="nails8.jpg" alt="Arte 8" loading="lazy">
+      <img src="nails9.jpg" alt="Arte 9" loading="lazy">
     </div>
   </section>
 
   <section class="servicos">
     <h2 class="menu-title">Menu de Serviços</h2>
-    <div class="servicos-container reveal">
-      
-      <div class="servico-item reveal">
+    <div class="servicos-container">
+      <div class="servico-item">
         <span class="servico-nome">Alongamento de Fibra</span>
         <div class="servico-linha"></div>
         <span class="servico-preco">R$ 90,00</span>
       </div>
       
-      <div class="servico-item reveal">
+      <div class="servico-item">
         <span class="servico-nome">Manutenção de Fibra</span>
         <div class="servico-linha"></div>
         <span class="servico-preco">R$ 80,00</span>
       </div>
       
-      <div class="servico-item reveal">
+      <div class="servico-item">
         <span class="servico-nome">Banho de Gel</span>
         <div class="servico-linha"></div>
         <span class="servico-preco">R$ 70,00</span>
       </div>
       
-      <div class="servico-item reveal">
+      <div class="servico-item">
         <span class="servico-nome">Esmaltação em Gel</span>
         <div class="servico-linha"></div>
         <span class="servico-preco">R$ 60,00</span>
       </div>
-      
     </div>
   </section>
 
-  <footer class="footer-simple reveal">
+  <footer class="footer-simple">
     <div class="footer-content">
       <p class="footer-tagline">Expressão em cada traço.</p>
       <div class="footer-info">
@@ -127,6 +130,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-<div class="transition-blob-container">
-  <div class="floating-blob"></div>
-</div>
