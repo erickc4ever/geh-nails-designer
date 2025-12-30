@@ -39,7 +39,7 @@
 
 .typing-container {
   min-height: 1.5em;
-  color: var(--primary-dark);
+  color: var(--pure-light);
   font-style: italic;
   font-family: serif;
 }
