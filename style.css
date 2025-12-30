@@ -134,6 +134,39 @@ body::before {
   z-index: 1;
 }
 
+/* 8. REFINAMENTO DA TABELA PREMIUM */
+.luxury-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Efeito de cursor magnético nos itens da tabela */
+.luxury-item:hover ~ .cursor-outline {
+  transform: translate(-50%, -50%) scale(1.6);
+  background-color: rgba(155, 126, 189, 0.15);
+  border-color: var(--soft-purple);
+}
+
+/* Animação sutil para os ícones */
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.servico-icon {
+  animation: icon-float 4s ease-in-out infinite;
+}
+
+.luxury-item:hover .servico-icon {
+  animation-duration: 2s;
+}
+
 /* RESPONSIVIDADE */
 @media (max-width: 768px) {
   .cursor-dot,
@@ -145,7 +178,8 @@ body::before {
   a,
   .galeria img,
   button,
-  .glass-btn {
+  .glass-btn,
+  .luxury-item {
     cursor: auto !important;
   }
   
@@ -159,6 +193,15 @@ body::before {
     transform: scale(0.98) !important;
     border-radius: 20px 5px !important;
   }
+  
+  /* Desativa algumas animações em mobile para performance */
+  .servico-icon {
+    animation: none;
+  }
+  
+  .luxury-item:hover .servico-icon {
+    animation: none;
+  }
 }
 
 /* CURSOR APENAS PARA DESKTOP */
@@ -167,7 +210,8 @@ body::before {
   a,
   .galeria img,
   button,
-  .glass-btn {
+  .glass-btn,
+  .luxury-item {
     cursor: none;
   }
 }
