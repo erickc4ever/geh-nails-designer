@@ -44,22 +44,25 @@
   font-family: serif;
 }
 
-/* 4. GALERIA & INTERAÇÃO ARTÍSTICA */
+/* 4. GALERIA & INTERAÇÃO ARTÍSTICA - SOBRESCREVENDO MAIN.CSS */
 .galeria img {
-  opacity: 0;
-  transform: scale(1.05);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0 !important;
+  transform: scale(1.05) !important;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.5s ease !important;
+  will-change: transform, opacity, filter;
 }
 
 .galeria img.visible {
-  opacity: 1;
-  transform: scale(1);
+  opacity: 1 !important;
+  transform: scale(1) !important;
 }
 
 .galeria img:hover {
-  transform: scale(0.96) rotate(1deg);
-  border-radius: 40px 10px; 
-  filter: saturate(1.3) brightness(1.1);
+  transform: scale(0.96) rotate(1deg) !important;
+  border-radius: 40px 10px !important; 
+  filter: saturate(1.3) brightness(1.1) !important;
+  transition-duration: 0.3s !important;
 }
 
 /* 5. INTERFACE & CURSOR MAGNÉTICO */
@@ -68,59 +71,105 @@
 }
 
 .cursor-dot {
-  width: 6px; height: 6px;
+  width: 6px; 
+  height: 6px;
   background: var(--accent-purple); /* Roxo Vibrante 9B7EBD */
-  position: fixed; pointer-events: none;
-  z-index: 10002; border-radius: 50%;
+  position: fixed; 
+  pointer-events: none;
+  z-index: 10003; /* Acima da barra de progresso */
+  border-radius: 50%;
   mix-blend-mode: difference;
 }
 
 .cursor-outline {
-  width: 30px; height: 30px;
+  width: 30px; 
+  height: 30px;
   border: 1px solid var(--accent-purple);
-  position: fixed; pointer-events: none;
-  z-index: 10001; border-radius: 50%;
+  position: fixed; 
+  pointer-events: none;
+  z-index: 10002; /* Entre o dot e a barra */
+  border-radius: 50%;
   transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
 }
 
-/* 6. BARRA DE PROGRESSO DINÂMICA */
+/* 6. BARRA DE PROGRESSO DINÂMICA - ACIMA DA TEXTURA */
 body::before {
   content: "";
-  position: fixed; top: 0; left: 0;
+  position: fixed; 
+  top: 0; 
+  left: 0;
   height: 3px; 
   background: var(--accent-purple); /* 9B7EBD */
   width: var(--scroll-width, 0%);
-  z-index: 10001;
+  z-index: 10001; /* Acima do grain-overlay (10000) */
   box-shadow: 0 0 15px var(--accent-purple);
 }
 
 /* 7. REFINO DO FOOTER (LUXO NO ESCURO) */
+.footer-simple {
+  position: relative; /* Garantir contexto para ::before */
+  overflow: hidden; /* Conter o GEH grande */
+}
+
 .footer-simple .footer-tagline {
   /* Gradiente usando a nova paleta: Profundo -> Vibrante -> Gelo */
   background: linear-gradient(90deg, var(--accent-purple), var(--pure-light), var(--accent-purple));
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   animation: shine 5s linear infinite;
 }
 
 .footer-simple::before {
   content: "GEH";
-  position: absolute; bottom: -20px; right: -20px;
-  font-size: 15vw; font-weight: 900;
+  position: absolute; 
+  bottom: -20px; 
+  right: -20px;
+  font-size: 15vw; 
+  font-weight: 900;
   color: var(--accent-purple); 
   opacity: 0.05; 
   pointer-events: none;
   filter: blur(4px);
+  z-index: 1; /* Atrás do conteúdo */
 }
 
 /* RESPONSIVIDADE */
 @media (max-width: 768px) {
-  .cursor-dot, .cursor-outline { display: none; }
-  body { cursor: auto; }
-  .footer-simple::before { font-size: 10rem; bottom: -10px; right: -10px; }
+  .cursor-dot, 
+  .cursor-outline { 
+    display: none; 
+  }
+  
+  body, 
+  a, 
+  .galeria img, 
+  button, 
+  .glass-btn { 
+    cursor: auto !important; /* Forçar cursor visível em mobile */
+  }
+  
+  .footer-simple::before { 
+    font-size: 10rem; 
+    bottom: -10px; 
+    right: -10px; 
+  }
+  
+  /* Otimizar animações em mobile */
+  .galeria img:hover {
+    transform: scale(0.98) !important; /* Efeito mais sutil */
+    border-radius: 20px 5px !important;
+  }
 }
 
-@media (pointer: fine) {
-  body, a, .galeria img, button, .glass-btn { cursor: none; }
+/* CURSOR APENAS PARA DISPOSITIVOS COM PONTEIRO PRECISO */
+@media (pointer: fine) and (min-width: 769px) {
+  body, 
+  a, 
+  .galeria img, 
+  button, 
+  .glass-btn { 
+    cursor: none; 
+  }
 }
