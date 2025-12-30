@@ -1,5 +1,5 @@
 /* GEH NAILS - APP.JS 
-   VERSÃO: REVELAÇÃO EM CASCATA & RITMO ORGÂNICO - CORRIGIDO
+   VERSÃO: CONGELAMENTO DO FRAME FINAL
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Flag para controlar digitação
   let typingStarted = false;
+  
+  // Flag para controlar se vídeo já terminou
+  let videoEnded = false;
 
   // 2. EFEITO DE DIGITAÇÃO (RITMO HUMANO)
   const typeEffect = () => {
@@ -28,7 +31,30 @@ document.addEventListener("DOMContentLoaded", () => {
     typeNextChar();
   };
 
-  // 3. GESTÃO DE MÍDIA E INÍCIO DA DIGITAÇÃO
+  // 3. GESTÃO DO VÍDEO - CONGELAMENTO NO FRAME FINAL
+  const handleVideoEnd = () => {
+    if (video && !videoEnded) {
+      videoEnded = true;
+      
+      // 1. Pausa o vídeo
+      video.pause();
+      
+      // 2. Vai para o frame final (último segundo)
+      // Se o vídeo tem 3s, vai para 2.9s para pegar o frame da logo
+      video.currentTime = Math.max(0, video.duration - 0.1);
+      
+      // 3. Desabilita completamente os controles
+      video.controls = false;
+      video.removeAttribute('autoplay');
+      
+      // 4. Inicia a digitação
+      startTyping();
+      
+      console.log("Vídeo congelado no frame final com logo");
+    }
+  };
+
+  // 4. INÍCIO DA DIGITAÇÃO
   const startTyping = () => {
     if (!typingStarted && typingElement) {
       typingStarted = true;
@@ -36,37 +62,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // 5. CONFIGURAÇÃO DO VÍDEO
   if (video) {
-    // Tenta tocar o vídeo
-    video.play().catch(() => {
-      console.log("Play aguardando interação - iniciando digitação");
+    // Remove autoplay se já tiver terminado em sessão anterior
+    if (sessionStorage.getItem('videoEnded')) {
+      video.removeAttribute('autoplay');
+      video.currentTime = video.duration - 0.1; // Vai direto para o frame final
+      video.pause();
       startTyping();
-    });
-    
-    // Quando o vídeo terminar, pausa e inicia digitação
-    video.addEventListener("ended", () => {
-      video.pause(); // PARA O VÍDEO
-      video.currentTime = video.duration; // Garante que está no fim
-      startTyping();
-    });
-    
-    // Se o vídeo já estiver carregado (readyState 4 = carregado completo)
-    if (video.readyState >= 4) {
-      // Se o vídeo já terminou, inicia digitação
-      if (video.currentTime >= video.duration) {
+      videoEnded = true;
+    } else {
+      // Primeira vez - toca o vídeo
+      video.play().catch((error) => {
+        console.log("Aguardando interação ou erro no play:", error);
+        // Se não conseguir tocar, inicia digitação
         startTyping();
-      }
+      });
     }
     
-    // Backup: inicia digitação após 5 segundos mesmo se o vídeo não terminar
-    setTimeout(startTyping, 5000);
+    // Monitora o tempo do vídeo
+    video.addEventListener('timeupdate', () => {
+      // Se estiver nos últimos 0.5 segundos, prepara para congelar
+      if (video.currentTime >= video.duration - 0.5 && !videoEnded) {
+        handleVideoEnd();
+        sessionStorage.setItem('videoEnded', 'true');
+      }
+    });
+    
+    // Backup: se o evento 'ended' não disparar
+    video.addEventListener('ended', handleVideoEnd);
+    
+    // Backup de segurança: inicia digitação após 4 segundos
+    setTimeout(() => {
+      if (!typingStarted) {
+        startTyping();
+      }
+    }, 4000);
     
   } else {
-    // Se não houver vídeo, iniciar digitação imediatamente
-    setTimeout(startTyping, 1500);
+    // Se não houver vídeo, inicia digitação
+    setTimeout(startTyping, 1000);
   }
 
-  // 4. CURSOR MAGNÉTICO (DESKTOP)
+  // 6. CURSOR MAGNÉTICO (DESKTOP) - MANTIDO
   if (dot && outline) {
     const isDesktop = window.innerWidth > 768;
     
@@ -81,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       });
 
-      // Elementos interativos
       const interactiveElements = document.querySelectorAll('a, .galeria img, .glass-btn, button, .servico-item');
       
       interactiveElements.forEach(el => {
@@ -96,34 +133,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     } else {
-      // Em mobile, esconder elementos do cursor
       dot.style.display = 'none';
       outline.style.display = 'none';
     }
   }
 
-  // 5. SCROLL & PARALLAX
+  // 7. SCROLL & PARALLAX - MANTIDO
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
     const pageHeight = document.body.scrollHeight - window.innerHeight;
     const progress = Math.min(100, (scrollY / pageHeight) * 100);
     
-    // Barra de progresso
     document.documentElement.style.setProperty('--scroll-width', `${progress}%`);
     
-    // Parallax no vídeo (apenas na seção hero)
     if (video && scrollY < window.innerHeight) {
       const parallaxAmount = scrollY * 0.3;
       video.style.transform = `translateY(${parallaxAmount}px)`;
-      
-      // Se o usuário já rolou para baixo, pausa o vídeo
-      if (scrollY > 100 && !video.paused) {
-        video.pause();
-      }
     }
   });
 
-  // 6. SISTEMA DE REVELAÇÃO EM CASCATA OTIMIZADO
+  // 8. SISTEMA DE REVELAÇÃO EM CASCATA - MANTIDO
   const revealOptions = {
     threshold: 0.1,
     rootMargin: "0px 0px -50px 0px"
@@ -134,38 +163,32 @@ document.addEventListener("DOMContentLoaded", () => {
       if (entry.isIntersecting) {
         const target = entry.target;
         
-        // Delay baseado no tipo de elemento
         let delay = 0;
         
         if (target.classList.contains('servico-item')) {
-          // Para itens da tabela, usar posição na lista
           const serviceItems = Array.from(
             document.querySelectorAll('.servicos-container .servico-item')
           );
           const index = serviceItems.indexOf(target);
-          delay = index * 100; // 100ms entre cada item
+          delay = index * 100;
         } 
         else if (target.tagName === 'IMG' && target.closest('.galeria')) {
-          // Para imagens da galeria
           const galleryImages = Array.from(
             document.querySelectorAll('.galeria img')
           );
           const index = galleryImages.indexOf(target);
-          delay = index * 150; // 150ms entre cada imagem
+          delay = index * 150;
         }
         
-        // Aplicar revelação com delay
         setTimeout(() => {
           target.classList.add('visible');
         }, delay);
         
-        // Parar de observar após revelar
         revealObserver.unobserve(target);
       }
     });
   }, revealOptions);
 
-  // 7. OBSERVAR ELEMENTOS (SEM DUPLICAÇÃO)
   const revealTargets = document.querySelectorAll(
     '.reveal:not(.servicos-container):not(.galeria), ' +
     '.galeria img, ' +
@@ -184,25 +207,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 8. DISPARAR EVENTO DE SCROLL INICIAL
+  // 9. DISPARAR EVENTO DE SCROLL INICIAL
   setTimeout(() => {
     window.dispatchEvent(new Event('scroll'));
   }, 100);
-
-  // 9. CONTROLE DE VÍDEO ADICIONAL
-  // Pausa o vídeo quando o usuário sai da página
-  document.addEventListener('visibilitychange', () => {
-    if (video && document.hidden) {
-      video.pause();
-    }
-  });
-
-  // Pausa o vídeo se o usuário rolar para baixo
-  let videoPausedByScroll = false;
-  window.addEventListener('scroll', () => {
-    if (video && window.scrollY > 300 && !video.paused && !videoPausedByScroll) {
-      video.pause();
-      videoPausedByScroll = true;
-    }
-  });
 });
+
+// 10. LIMPA SESSION STORAGE QUANDO O USUÁRIO SAIR COMPLETAMENTE
+window.addEventListener('beforeunload', () => {
+  // Não limpa o sessionStorage - mantém o estado "vídeo terminado"
+  // Isso faz com que ao voltar na página, o vídeo já esteja congelado
+});
+
+// 11. RESETA APÓS 1 HORA (opcional)
+setTimeout(() => {
+  sessionStorage.removeItem('videoEnded');
+}, 3600000); // 1 hora em milissegundos
