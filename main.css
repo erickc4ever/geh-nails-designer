@@ -84,26 +84,79 @@ body {
   letter-spacing: -5px;
 }
 
-/* BOLHA DE TRANSIÇÃO */
+/* BOLHA COM IMAGEM - NOVA VERSÃO */
 .transition-blob-container {
   width: 100%;
-  height: 0;
+  height: 150px;
   position: relative;
-  display: flex;
-  justify-content: center;
+  background: linear-gradient(to bottom, transparent, #000);
+  margin-top: -75px;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.blob-with-image {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(155, 126, 189, 0.2);
+  box-shadow: 
+    0 0 80px rgba(155, 126, 189, 0.3),
+    inset 0 0 40px rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: float-gentle 8s ease-in-out infinite;
   z-index: 10;
 }
 
-.floating-blob {
-  width: 200px;
-  height: 200px;
-  background: var(--primary-dark);
-  border-radius: 50%;
+.blob-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) brightness(0.85) contrast(1.1);
+  transition: all 0.8s ease;
+}
+
+/* Efeito de glow nas bordas (incandescente) */
+.blob-with-image::before {
+  content: '';
   position: absolute;
-  top: -100px;
-  filter: blur(40px);
-  opacity: 0.6;
-  animation: breath 4s ease-in-out infinite;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 215, 150, 0.15) 50%, /* Tom quente incandescente */
+    transparent 70%
+  );
+  border-radius: 50%;
+  z-index: -1;
+  animation: rotate-glow 20s linear infinite;
+  pointer-events: none;
+  filter: blur(8px);
+}
+
+.blob-with-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 235, 200, 0.08) 0%, /* Luz quente interna */
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: overlay;
 }
 
 /* INTRO */
@@ -336,10 +389,16 @@ body {
     height: 250px;
   }
   
-  .floating-blob {
-    width: 150px;
-    height: 150px;
-    top: -75px;
+  /* Ajustes para a nova bolha em mobile */
+  .transition-blob-container {
+    height: 120px;
+    margin-top: -60px;
+  }
+  
+  .blob-with-image {
+    width: 200px;
+    height: 200px;
+    top: -100px;
   }
   
   .footer-info {
@@ -356,8 +415,26 @@ body {
   }
 }
 
-/* ANIMAÇÃO BREATH PARA BOLHA */
+/* ANIMAÇÕES */
 @keyframes breath {
   0%, 100% { transform: scale(1); opacity: 0.6; }
   50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* Animações para a nova bolha */
+@keyframes float-gentle {
+  0%, 100% { 
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+  }
+  33% { 
+    transform: translateX(-50%) translateY(-15px) rotate(2deg);
+  }
+  66% { 
+    transform: translateX(-50%) translateY(10px) rotate(-2deg);
+  }
+}
+
+@keyframes rotate-glow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
