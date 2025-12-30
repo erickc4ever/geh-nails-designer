@@ -119,7 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       });
 
-      const interactiveElements = document.querySelectorAll('a, .galeria img, .glass-btn, button, .servico-item');
+      // Atualizado para incluir os novos elementos da tabela premium
+      const interactiveElements = document.querySelectorAll('a, .galeria img, .glass-btn, button, .servico-item, .luxury-item, .servico-header, .gradient-text');
       
       interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
@@ -152,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 8. SISTEMA DE REVELAÇÃO EM CASCATA - MANTIDO
+  // 8. SISTEMA DE REVELAÇÃO EM CASCATA - ATUALIZADO PARA NOVA TABELA
   const revealOptions = {
     threshold: 0.1,
     rootMargin: "0px 0px -50px 0px"
@@ -165,34 +166,44 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let delay = 0;
         
-        if (target.classList.contains('servico-item')) {
+        // Para itens da nova tabela premium (.luxury-item)
+        if (target.classList.contains('luxury-item') || target.classList.contains('servico-item')) {
           const serviceItems = Array.from(
-            document.querySelectorAll('.servicos-container .servico-item')
+            document.querySelectorAll('.servicos-container .luxury-item, .servicos-container .servico-item')
           );
           const index = serviceItems.indexOf(target);
-          delay = index * 100;
+          delay = index * 100; // 100ms entre cada item
         } 
         else if (target.tagName === 'IMG' && target.closest('.galeria')) {
+          // Para imagens da galeria
           const galleryImages = Array.from(
             document.querySelectorAll('.galeria img')
           );
           const index = galleryImages.indexOf(target);
-          delay = index * 150;
+          delay = index * 150; // 150ms entre cada imagem
+        }
+        // Para outros elementos reveal
+        else if (target.classList.contains('reveal')) {
+          delay = Math.random() * 300; // Delay aleatório para variedade
         }
         
+        // Aplicar revelação com delay
         setTimeout(() => {
           target.classList.add('visible');
         }, delay);
         
+        // Parar de observar após revelar
         revealObserver.unobserve(target);
       }
     });
   }, revealOptions);
 
+  // 9. OBSERVAR ELEMENTOS (ATUALIZADO COM NOVAS CLASSES)
   const revealTargets = document.querySelectorAll(
     '.reveal:not(.servicos-container):not(.galeria), ' +
     '.galeria img, ' +
     '.servico-item, ' +
+    '.luxury-item, ' +
     '.footer-simple > *'
   );
   
@@ -207,19 +218,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 9. DISPARAR EVENTO DE SCROLL INICIAL
+  // 10. DISPARAR EVENTO DE SCROLL INICIAL
   setTimeout(() => {
     window.dispatchEvent(new Event('scroll'));
   }, 100);
 });
 
-// 10. LIMPA SESSION STORAGE QUANDO O USUÁRIO SAIR COMPLETAMENTE
+// 11. LIMPA SESSION STORAGE QUANDO O USUÁRIO SAIR COMPLETAMENTE
 window.addEventListener('beforeunload', () => {
   // Não limpa o sessionStorage - mantém o estado "vídeo terminado"
   // Isso faz com que ao voltar na página, o vídeo já esteja congelado
 });
 
-// 11. RESETA APÓS 1 HORA (opcional)
+// 12. RESETA APÓS 1 HORA (opcional)
 setTimeout(() => {
   sessionStorage.removeItem('videoEnded');
 }, 3600000); // 1 hora em milissegundos
