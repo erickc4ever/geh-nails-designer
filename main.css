@@ -339,13 +339,13 @@ body {
   margin-right: auto;
 }
 
-/* ======================================/* ============================================
-   GALERIA EDITORIAL - COLAGEM 3x3 COMPACTA
+/* /* ============================================
+   GALERIA EDITORIAL - COLAGEM 3x3 COMPACTA (CORRIGIDO)
    ============================================ */
 
 .galeria-container {
   background: #000;
-  padding: 80px 20px; /* Reduzi padding para ficar mais compacto */
+  padding: 80px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -357,7 +357,7 @@ body {
 
 .galeria-intro {
   text-align: center;
-  margin-bottom: 40px; /* Menos espaço */
+  margin-bottom: 40px;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -373,28 +373,28 @@ body {
   letter-spacing: 0.03em;
 }
 
-/* Grid 3x3 COLAGEM - Funciona em todos os dispositivos */
+/* Grid 3x3 COLAGEM - DESKTOP */
 .editorial-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* SEMPRE 3 colunas */
-  grid-auto-rows: minmax(150px, 1fr); /* Altura flexível */
-  gap: 8px; /* ESPAÇAMENTO MÍNIMO - colagem */
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 150px); /* 4 linhas FIXAS de 150px */
+  gap: 8px;
   max-width: 1000px;
   margin: 0 auto;
   width: 100%;
 }
 
-/* Imagens da colagem - PREENCHEM TOTALMENTE as células */
+/* Imagens da colagem */
 .editorial-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* PREENCHE a célula sem distorcer */
+  object-fit: cover;
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 }
 
-/* Efeito hover (mantido) */
+/* Efeito hover */
 .editorial-img:hover {
   transform: scale(0.98) !important;
   filter: saturate(1.2) brightness(1.05) !important;
@@ -403,71 +403,98 @@ body {
 }
 
 /* ============================================
-   COLAGEM ASSIMÉTRICA - Imagens ocupam múltiplas células
+   COLAGEM ASSIMÉTRICA - POSIÇÕES FIXAS
    ============================================ */
 
-/* nails1.jpg - Superior ESQUERDO (2x2 - QUADRADO GRANDE) */
+/* nails1.jpg - Superior ESQUERDO (2x2) */
 .editorial-img:nth-child(1) {
-  grid-column: 1 / span 2; /* Ocupa colunas 1 E 2 */
-  grid-row: 1 / span 2;    /* Ocupa linhas 1 E 2 */
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
 }
 
-/* nails2.jpg - Superior CENTRO (1x1 - PEQUENA) */
+/* nails2.jpg - Superior DIREITO (1x1) */
 .editorial-img:nth-child(2) {
-  grid-column: 3;          /* Coluna 3 apenas */
-  grid-row: 1;             /* Linha 1 apenas */
+  grid-column: 3;
+  grid-row: 1;
 }
 
-/* nails3.jpg - Superior DIREITO (1x1 - PEQUENA) */
+/* nails3.jpg - Meio DIREITO (1x1) */
 .editorial-img:nth-child(3) {
-  grid-column: 3;          /* Coluna 3 apenas */
-  grid-row: 2;             /* Linha 2 apenas */
+  grid-column: 3;
+  grid-row: 2;
 }
 
-/* nails4.jpg - Meio ESQUERDO (1x1 - já ocupado pela img1) */
-/* nails4.jpg vai para linha 3, coluna 1 */
+/* nails4.jpg - Meio ESQUERDO (1x1) */
 .editorial-img:nth-child(4) {
-  grid-column: 1;          /* Coluna 1 */
-  grid-row: 3;             /* Linha 3 */
+  grid-column: 1;
+  grid-row: 3;
 }
 
-/* nails5.jpg - Meio CENTRO (1x2 - ALTA) */
+/* nails5.jpg - Centro (1x2) */
 .editorial-img:nth-child(5) {
-  grid-column: 2;          /* Coluna 2 */
-  grid-row: 3 / span 2;    /* Ocupa linhas 3 E 4 */
+  grid-column: 2;
+  grid-row: 3 / span 2;
 }
 
 /* nails6.jpg - Inferior ESQUERDO (1x1) */
 .editorial-img:nth-child(6) {
-  grid-column: 1;          /* Coluna 1 */
-  grid-row: 4;             /* Linha 4 */
+  grid-column: 1;
+  grid-row: 4;
 }
 
-/* nails7.jpg - Inferior DIREITO (2x1 - LARGA) */
+/* nails7.jpg - Inferior DIREITO (2x1) */
 .editorial-img:nth-child(7) {
-  grid-column: 2 / span 2; /* Ocupa colunas 2 E 3 */
-  grid-row: 4;             /* Linha 4 */
+  grid-column: 2 / span 2;
+  grid-row: 4;
 }
 
 /* ============================================
-   RESPONSIVIDADE - MESMO GRID 3x3, SÓ QUE COMPACTO
+   RESPONSIVIDADE - MOBILE (AGORA FUNCIONA!)
    ============================================ */
 @media (max-width: 768px) {
   .editorial-grid {
-    /* MESMO GRID 3x3, mas com células menores */
-    grid-auto-rows: minmax(120px, 1fr); /* Altura menor no mobile */
-    gap: 6px; /* Espaçamento ainda menor */
+    /* NO MOBILE: mantém 3 colunas mas com altura PROPORCIONAL */
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 100px); /* 100px no mobile */
+    gap: 6px;
     max-width: 100%;
-    padding: 0 10px; /* Padding lateral mínimo */
+    padding: 0 10px;
   }
   
-  /* Ajuste fino das alturas no mobile para colagem perfeita */
+  /* Mantém EXATAMENTE as mesmas posições, só menor */
   .editorial-img:nth-child(1) {
-    grid-row: 1 / span 2; /* Continua 2x2 */
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 2;
+  }
+  
+  .editorial-img:nth-child(2) {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  
+  .editorial-img:nth-child(3) {
+    grid-column: 3;
+    grid-row: 2;
+  }
+  
+  .editorial-img:nth-child(4) {
+    grid-column: 1;
+    grid-row: 3;
   }
   
   .editorial-img:nth-child(5) {
-    grid-row: 3 / span 2; /* Continua 1x2 */
+    grid-column: 2;
+    grid-row: 3 / span 2;
+  }
+  
+  .editorial-img:nth-child(6) {
+    grid-column: 1;
+    grid-row: 4;
+  }
+  
+  .editorial-img:nth-child(7) {
+    grid-column: 2 / span 2;
+    grid-row: 4;
   }
   
   .galeria-tagline {
@@ -480,15 +507,15 @@ body {
   }
   
   .galeria-container {
-    padding: 60px 15px; /* Mais compacto no mobile */
+    padding: 60px 15px;
   }
 }
 
-/* Para telas muito pequenas (menos de 400px) */
+/* Para telas muito pequenas */
 @media (max-width: 400px) {
   .editorial-grid {
-    grid-auto-rows: minmax(100px, 1fr); /* Altura mínima */
-    gap: 4px; /* Quase sem espaço */
+    grid-template-rows: repeat(4, 80px); /* Ainda menor */
+    gap: 4px;
   }
 }
 /* SERVIÇOS - TABELA PREMIUM */
