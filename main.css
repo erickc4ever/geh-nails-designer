@@ -339,7 +339,10 @@ body {
   margin-right: auto;
 }
 
-/* GALERIA EDITORIAL - 7 IMAGENS */
+/* ============================================
+   GALERIA EDITORIAL - 7 IMAGENS (CORRIGIDO)
+   ============================================ */
+
 .galeria-container {
   background: #000;
   padding: 100px 20px;
@@ -370,17 +373,18 @@ body {
   letter-spacing: 0.03em;
 }
 
-/* Grid Editorial - DESKTOP */
+/* Grid Editorial - DESKTOP (CORRIGIDO) */
 .editorial-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(3, 200px);
+  grid-template-rows: auto; /* CORREÇÃO: auto em vez de fixo */
   gap: 15px;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
-/* Imagens da galeria editorial */
+/* Imagens da galeria editorial (CORRIGIDO) */
 .editorial-img {
   width: 100%;
   height: 100%;
@@ -391,61 +395,88 @@ body {
   overflow: hidden;
 }
 
-.editorial-img:hover {
-  transform: scale(0.96) rotate(1deg) !important;
-  border-radius: 40px 10px !important;
-  filter: saturate(1.3) brightness(1.1) !important;
-  transition-duration: 0.3s !important;
-  z-index: 2;
-}
+/* POSICIONAMENTO CORRETO DAS IMAGENS (SEM SOBREPOSIÇÃO) */
 
-/* POSICIONAMENTO DAS IMAGENS NO GRID EDITORIAL */
-
-/* Linha 1: 3 imagens (topo) */
+/* Linha 1: 3 imagens pequenas (topo) - cada uma ocupa 2 colunas */
 .editorial-img:nth-child(1) {
-  grid-column: 1 / span 2;
-  grid-row: 1;
-  object-position: 60% center;
+  grid-column: 1 / span 2;    /* Colunas 1-2 */
+  grid-row: 1;                /* Linha 1 */
+  height: 200px;              /* Altura fixa para pequenas */
 }
 
 .editorial-img:nth-child(2) {
-  grid-column: 3 / span 2;
-  grid-row: 1;
-  object-position: center center;
+  grid-column: 3 / span 2;    /* Colunas 3-4 */
+  grid-row: 1;                /* Linha 1 */
+  height: 200px;
 }
 
 .editorial-img:nth-child(3) {
-  grid-column: 5 / span 2;
-  grid-row: 1;
-  object-position: 40% center;
+  grid-column: 5 / span 2;    /* Colunas 5-6 */
+  grid-row: 1;                /* Linha 1 */
+  height: 200px;
 }
 
-/* Linha 2: Imagem larga + imagem lateral */
+/* Linha 2: 2 imagens médias */
 .editorial-img:nth-child(4) {
-  grid-column: 1 / span 4;
-  grid-row: 2;
-  object-position: center 30%;
+  grid-column: 1 / span 3;    /* Colunas 1-3 (mais larga) */
+  grid-row: 2;                /* Linha 2 */
+  height: 250px;              /* Mais alta que as do topo */
 }
 
 .editorial-img:nth-child(5) {
-  grid-column: 5 / span 2;
-  grid-row: 2;
-  object-position: center 60%;
+  grid-column: 4 / span 3;    /* Colunas 4-6 */
+  grid-row: 2;                /* Linha 2 */
+  height: 250px;
 }
 
 /* Linha 3: 2 imagens grandes (base) */
 .editorial-img:nth-child(6) {
-  grid-column: 1 / span 3;
-  grid-row: 3;
-  object-position: center 40%;
+  grid-column: 1 / span 2;    /* Colunas 1-2 */
+  grid-row: 3;                /* Linha 3 */
+  height: 280px;              /* Mais alta ainda */
 }
 
 .editorial-img:nth-child(7) {
-  grid-column: 4 / span 3;
-  grid-row: 3;
-  object-position: center 60%;
+  grid-column: 3 / span 4;    /* Colunas 3-6 (mais larga) */
+  grid-row: 3;                /* Linha 3 */
+  height: 280px;
 }
 
+/* ============================================
+   RESPONSIVIDADE - MOBILE (CORRIGIDO)
+   ============================================ */
+@media (max-width: 768px) {
+  .editorial-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(7, auto); /* Altura automática */
+    gap: 20px;
+    max-width: 100%;
+    padding: 0 15px;
+  }
+  
+  /* NO MOBILE: reset completo das posições do grid */
+  .editorial-img:nth-child(1),
+  .editorial-img:nth-child(2),
+  .editorial-img:nth-child(3),
+  .editorial-img:nth-child(4),
+  .editorial-img:nth-child(5),
+  .editorial-img:nth-child(6),
+  .editorial-img:nth-child(7) {
+    grid-column: 1;
+    grid-row: auto; /* Posição sequencial automática */
+    height: 300px; /* Altura consistente no mobile */
+    width: 100%;
+  }
+  
+  .galeria-tagline {
+    font-size: 1.1rem;
+    padding: 0 20px;
+  }
+  
+  .galeria-intro {
+    margin-bottom: 40px;
+  }
+}
 /* SERVIÇOS - TABELA PREMIUM */
 .servicos {
   padding: 120px 5%;
