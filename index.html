@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <title>GEH Nails Designer | Arte & Essência</title>
   
-  <meta name="description" content="GEH Nails Designer - Especialista em alongamento de fibra e arte em gel. Psicodelia rústica e movimento orgânico.">
+  <meta name="description" content="GEH Nails Designer - Especialista em alongamento de fibra e arte em gel. Psicodelia rústica e movimento orgânico em Araucária.">
   <meta property="og:title" content="GEH Nails Designer | Arte & Essência">
   <meta property="og:image" content="preview.jpg">
   <meta name="theme-color" content="#3B1E54">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Fontes experimentais e psicodélicas -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;500;600;700&family=Unica+One&display=swap" rel="stylesheet">
@@ -19,10 +18,14 @@
   <link rel="stylesheet" href="main.css">
   
   <style>
-    /* Override para tipografia experimental */
+    /* Tipografia e Identidade Visual */
+    :root {
+      --accent-purple: #9d50bb;
+      --soft-purple: #6e48aa;
+    }
+
     .hero-logo-text {
       font-family: 'Unica One', monospace;
-      font-weight: 400;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       position: relative;
@@ -39,203 +42,63 @@
       opacity: 0.6;
     }
     
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      font-feature-settings: "salt" on;
-    }
-    
-    .reveal-text {
+    .section-title, .reveal-text {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
     
-    .typing, .manifesto-content p {
+    .typing, .manifesto-content p, .footer-info span {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 300;
-      letter-spacing: 0.03em;
       line-height: 1.8;
     }
-    
-    .highlight {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      font-style: normal;
-      position: relative;
-      padding-left: 20px;
+
+    /* Galeria Editorial Escolhida */
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 15px;
+      padding: 20px;
     }
-    
-    .highlight::before {
-      content: '//';
-      position: absolute;
-      left: 0;
-      color: var(--accent-purple);
-      opacity: 0.6;
+
+    .editorial-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      grid-column: span 2;
+      transition: transform 0.5s ease;
     }
-    
-    /* Ícones minimalistas em CSS puro */
+
+    .img-wide { grid-column: span 4; }
+    .img-large { grid-column: span 3; height: 500px; }
+
+    @media (max-width: 768px) {
+      .editorial-grid { grid-template-columns: 1fr 1fr; }
+      .editorial-img, .img-wide, .img-large { grid-column: span 2; height: 350px; }
+    }
+
+    /* Estilização dos Ícones de Serviço */
     .servico-icon {
       display: inline-block;
       width: 20px;
       height: 20px;
       position: relative;
-      background: transparent;
     }
     
     .servico-icon::before {
       content: '';
       position: absolute;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       border: 1px solid var(--soft-purple);
-      border-radius: 50%;
-      opacity: 0.6;
       transition: all 0.4s ease;
     }
-    
-    .servico-icon::after {
-      content: '';
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: var(--accent-purple);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    
-    .luxury-item:hover .servico-icon::before {
-      transform: scale(1.2);
-      border-color: var(--accent-purple);
-      opacity: 1;
-    }
-    
-    .luxury-item:hover .servico-icon::after {
-      opacity: 1;
-    }
-    
-    /* Diferenciação por serviço com formas geométricas */
-    .servico-item:nth-child(1) .servico-icon::before { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+
+    .servico-item:nth-child(1) .servico-icon::before { border-radius: 30% 70% 70% 30%; }
     .servico-item:nth-child(2) .servico-icon::before { border-radius: 50% 50% 50% 0; transform: rotate(45deg); }
-    .servico-item:nth-child(3) .servico-icon::before { border-radius: 10px 30px 10px 30px; }
-    .servico-item:nth-child(4) .servico-icon::before { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-    
-    .servico-item:nth-child(1) .servico-icon::after { border-radius: 2px; transform: translate(-50%, -50%) rotate(45deg); }
-    .servico-item:nth-child(2) .servico-icon::after { border-radius: 0; width: 8px; height: 8px; }
-    .servico-item:nth-child(3) .servico-icon::after { border-radius: 1px; width: 8px; height: 3px; }
-    .servico-item:nth-child(4) .servico-icon::after { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-    
-    /* Footer com tipografia experimental */
-    .footer-tagline {
-      font-family: 'Unica One', monospace;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      position: relative;
-    }
-    
-    .footer-tagline::before,
-    .footer-tagline::after {
-      content: '◆';
-      position: absolute;
-      color: var(--accent-purple);
-      opacity: 0.3;
-      font-size: 0.8em;
-    }
-    
-    .footer-tagline::before {
-      left: -25px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    
-    .footer-tagline::after {
-      right: -25px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    
-    .footer-info span {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      position: relative;
-    }
-    
-    .copyright {
-      font-family: 'Space Grotesk', monospace;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      font-size: 0.7rem;
-      opacity: 0.4;
-    }
-    
-    /* Botões com estética synthwave/psicodélica */
-    .glass-btn {
-      font-family: 'Unica One', monospace;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .glass-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transition: left 0.6s ease;
-    }
-    
-    .glass-btn:hover::before {
-      left: 100%;
-    }
-    
-    /* Efeito de distorção sutil no título */
-    .reveal-text {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .reveal-text::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 2px;
-      top: 0;
-      color: var(--accent-purple);
-      opacity: 0.3;
-      filter: blur(1px);
-      z-index: -1;
-      transform: translate(1px, 1px);
-    }
-    
-    /* Responsividade da tipografia */
-    @media (max-width: 768px) {
-      .hero-logo-text {
-        letter-spacing: 0.1em;
-      }
-      
-      .reveal-text {
-        letter-spacing: 0.05em;
-        font-size: 2.2rem;
-      }
-      
-      .footer-tagline::before,
-      .footer-tagline::after {
-        display: none;
-      }
-    }
+    .servico-item:nth-child(3) .servico-icon::before { border-radius: 10px 30px; }
+    .servico-item:nth-child(4) .servico-icon::before { border-radius: 50%; }
   </style>
 </head>
 
@@ -248,16 +111,14 @@
     <div class="video-container">
       <video id="heroVideo" autoplay muted playsinline loop preload="metadata">
         <source src="video1.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
       </video>
       <div class="hero-content">
-        <h1 class="hero-logo-text" data-text="GEH">GEH</h1>
+        <h1 class="hero-logo-text">GEH</h1>
         <span class="hero-subtitle">Transformando unhas em obras de arte</span>
       </div>
     </div>
   </section>
 
-  <!-- BOLHA DE TRANSIÇÃO SIMPLES (sem imagem) -->
   <div class="transition-blob-container" aria-hidden="true">
     <div class="floating-blob"></div>
   </div>
@@ -272,10 +133,9 @@
   <section class="sobre-manifesto">
     <div class="manifesto-bg-text" aria-hidden="true">ESSÊNCIA</div>
     <div class="sobre-container">
-      <!-- BOLHA ARTÍSTICA COM IMAGEM nails10.jpg -->
       <div class="sobre-visual artistic-blob">
         <div class="blob-image-container">
-          <img src="nails10.jpg" alt="GEH Nails - Detalhe de trabalho artístico em unhas" class="blob-image" loading="lazy" width="400" height="400">
+          <img src="nails10.jpg" alt="GEH Nails" class="blob-image" loading="lazy">
           <div class="blob-inner">EST. 2025</div>
         </div>
       </div>
@@ -284,24 +144,27 @@
         <h2 class="section-title">A <br>Essência</h2>
         <div class="manifesto-content">
           <p class="reveal">Comecei aos 16 anos, buscando transformar sentimentos em algo visível. Sempre tive o desejo de expressar arte e deixar uma marca única.</p>
-          <p class="reveal">Encontrei nas unhas um espaço onde técnica e sensibilidade caminham juntas. Cada detalhe carrega uma intenção.</p>
-          <p class="highlight reveal">Meu trabalho é expressão, identidade e respeito por cada história que passa pelas minhas mãos.</p>
+          <p class="reveal">Encontrei nas unhas um espaço onde técnica e sensibilidade caminham juntas.</p>
+          <p class="highlight reveal">Meu trabalho é expressão, identidade e respeito por cada história.</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="galeria-container">
-    <div class="galeria">
-      <img src="nails1.jpg" alt="Arte em unhas 1 - Design psicodélico" loading="lazy" width="300" height="400">
-      <img src="nails2.jpg" alt="Arte em unhas 2 - Detalhe rústico" loading="lazy" width="300" height="400">
-      <img src="nails3.jpg" alt="Arte em unhas 3 - Alongamento de fibra" loading="lazy" width="300" height="400">
-      <img src="nails4.jpg" alt="Arte em unhas 4 - Design geométrico" loading="lazy" width="300" height="400">
-      <img src="nails5.jpg" alt="Arte em unhas 5 - Arte em gel" loading="lazy" width="300" height="400">
-      <img src="nails6.jpg" alt="Arte em unhas 6 - Detalhe orgânico" loading="lazy" width="300" height="400">
-      <img src="nails7.jpg" alt="Arte em unhas 7 - Design minimalista" loading="lazy" width="300" height="400">
-      <img src="nails8.jpg" alt="Arte em unhas 8 - Trabalho artístico" loading="lazy" width="300" height="400">
-      <img src="nails9.jpg" alt="Arte em unhas 9 - Finalização premium" loading="lazy" width="300" height="400">
+    <div class="galeria-intro">
+      <p class="galeria-tagline reveal">Cada detalhe conta uma história.<br>
+      Técnica, precisão e estética em harmonia.</p>
+    </div>
+    
+    <div class="editorial-grid">
+      <img src="nails1.jpg" alt="Nails 1" loading="lazy" class="editorial-img">
+      <img src="nails2.jpg" alt="Nails 2" loading="lazy" class="editorial-img">
+      <img src="nails3.jpg" alt="Nails 3" loading="lazy" class="editorial-img">
+      <img src="nails4.jpg" alt="Nails 4" loading="lazy" class="editorial-img img-wide">
+      <img src="nails5.jpg" alt="Nails 5" loading="lazy" class="editorial-img">
+      <img src="nails6.jpg" alt="Nails 6" loading="lazy" class="editorial-img img-large">
+      <img src="nails7.jpg" alt="Nails 7" loading="lazy" class="editorial-img img-large">
     </div>
   </section>
 
@@ -310,7 +173,6 @@
     <div class="servicos-container premium-table">
       <div class="table-glow" aria-hidden="true"></div>
       
-      <!-- SERVIÇOS COM ÍCONES GEOMÉTRICOS -->
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
           <span class="servico-icon" aria-hidden="true"></span>
@@ -328,7 +190,7 @@
         <div class="servico-divider"></div>
         <span class="servico-preco gradient-text">R$ 80,00</span>
       </div>
-      
+
       <div class="servico-item luxury-item reveal">
         <div class="servico-header">
           <span class="servico-icon" aria-hidden="true"></span>
@@ -354,19 +216,19 @@
       <p class="footer-tagline">Expressão em cada traço.</p>
       <div class="footer-info">
         <span>Araucária</span>
-        <div class="glass-divider" aria-hidden="true"></div>
+        <div class="glass-divider"></div>
         <span>Arte em Gel</span>
-        <div class="glass-divider" aria-hidden="true"></div>
+        <div class="glass-divider"></div>
         <span>Hora Marcada</span>
       </div>
-      <span class="copyright">&copy; 2025 GEH Nails Designer. Todos os direitos reservados.</span>
+      <span class="copyright">&copy; 2025 GEH Nails Designer.</span>
     </div>
   </footer>
 
   <div class="social-glass-container">
     <div class="social-glass-content">
-      <a href="https://wa.me/554196965591" class="glass-btn breath" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      <a href="https://instagram.com/g_nailsdesignerr" class="glass-btn breath" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://wa.me/554196965591" class="glass-btn breath" target="_blank">WhatsApp</a>
+      <a href="https://instagram.com/g_nailsdesignerr" class="glass-btn breath" target="_blank">Instagram</a>
     </div>
   </div>
 
