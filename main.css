@@ -340,7 +340,8 @@ body {
 }
 
 /* ============================================
-   GALERIA EDITORIAL - 7 IMAGENS (CORRIGIDO)
+   /* ============================================
+   GALERIA EDITORIAL - 7 IMAGENS (LAYOUT 3x3 ASSIMÉTRICO)
    ============================================ */
 
 .galeria-container {
@@ -373,18 +374,18 @@ body {
   letter-spacing: 0.03em;
 }
 
-/* Grid Editorial - DESKTOP (CORRIGIDO) */
+/* Grid 3x3 Editorial - DESKTOP */
 .editorial-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: auto; /* CORREÇÃO: auto em vez de fixo */
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
+  grid-template-rows: repeat(3, auto);   /* 3 linhas automáticas */
   gap: 15px;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   width: 100%;
 }
 
-/* Imagens da galeria editorial (CORRIGIDO) */
+/* Imagens da galeria editorial */
 .editorial-img {
   width: 100%;
   height: 100%;
@@ -395,66 +396,79 @@ body {
   overflow: hidden;
 }
 
-/* POSICIONAMENTO CORRETO DAS IMAGENS (SEM SOBREPOSIÇÃO) */
-
-/* Linha 1: 3 imagens pequenas (topo) - cada uma ocupa 2 colunas */
-.editorial-img:nth-child(1) {
-  grid-column: 1 / span 2;    /* Colunas 1-2 */
-  grid-row: 1;                /* Linha 1 */
-  height: 200px;              /* Altura fixa para pequenas */
-}
-
-.editorial-img:nth-child(2) {
-  grid-column: 3 / span 2;    /* Colunas 3-4 */
-  grid-row: 1;                /* Linha 1 */
-  height: 200px;
-}
-
-.editorial-img:nth-child(3) {
-  grid-column: 5 / span 2;    /* Colunas 5-6 */
-  grid-row: 1;                /* Linha 1 */
-  height: 200px;
-}
-
-/* Linha 2: 2 imagens médias */
-.editorial-img:nth-child(4) {
-  grid-column: 1 / span 3;    /* Colunas 1-3 (mais larga) */
-  grid-row: 2;                /* Linha 2 */
-  height: 250px;              /* Mais alta que as do topo */
-}
-
-.editorial-img:nth-child(5) {
-  grid-column: 4 / span 3;    /* Colunas 4-6 */
-  grid-row: 2;                /* Linha 2 */
-  height: 250px;
-}
-
-/* Linha 3: 2 imagens grandes (base) */
-.editorial-img:nth-child(6) {
-  grid-column: 1 / span 2;    /* Colunas 1-2 */
-  grid-row: 3;                /* Linha 3 */
-  height: 280px;              /* Mais alta ainda */
-}
-
-.editorial-img:nth-child(7) {
-  grid-column: 3 / span 4;    /* Colunas 3-6 (mais larga) */
-  grid-row: 3;                /* Linha 3 */
-  height: 280px;
+/* Efeito hover (mantido do style.css) */
+.editorial-img:hover {
+  transform: scale(0.96) rotate(1deg) !important;
+  border-radius: 40px 10px !important;
+  filter: saturate(1.3) brightness(1.1) !important;
+  transition-duration: 0.3s !important;
+  z-index: 2;
 }
 
 /* ============================================
-   RESPONSIVIDADE - MOBILE (CORRIGIDO)
+   POSICIONAMENTO ASSIMÉTRICO NO GRID 3x3
+   ============================================ */
+
+/* LINHA 1 (TOP) */
+.editorial-img:nth-child(1) {  /* nails1.jpg - Superior ESQUERDO (MAIOR) */
+  grid-column: 1;              /* Coluna 1 */
+  grid-row: 1 / span 2;        /* Ocupa linha 1 E 2 (mais alto) */
+  height: 100%;                /* Preenche as 2 linhas */
+}
+
+.editorial-img:nth-child(2) {  /* nails2.jpg - Superior CENTRO (médio) */
+  grid-column: 2;              /* Coluna 2 */
+  grid-row: 1;                 /* Linha 1 apenas */
+  height: 180px;               /* Altura média */
+}
+
+.editorial-img:nth-child(3) {  /* nails3.jpg - Superior DIREITO (PEQUENO) */
+  grid-column: 3;              /* Coluna 3 */
+  grid-row: 1;                 /* Linha 1 apenas */
+  height: 150px;               /* Altura pequena */
+  object-position: 60% center; /* Descentrado proposital */
+}
+
+/* LINHA 2 (MIDDLE) */
+.editorial-img:nth-child(4) {  /* nails4.jpg - Centro ESQUERDO (já ocupado pela img1) */
+  grid-column: 2;              /* Coluna 2 */
+  grid-row: 2;                 /* Linha 2 */
+  height: 180px;               /* Altura média */
+}
+
+.editorial-img:nth-child(5) {  /* nails5.jpg - Centro DIREITO (médio) */
+  grid-column: 3;              /* Coluna 3 */
+  grid-row: 2;                 /* Linha 2 */
+  height: 180px;               /* Altura média */
+  object-position: 40% center; /* Descentrado proposital */
+}
+
+/* LINHA 3 (BOTTOM) */
+.editorial-img:nth-child(6) {  /* nails6.jpg - Inferior ESQUERDO (GRANDE) */
+  grid-column: 2;              /* Coluna 2 */
+  grid-row: 3;                 /* Linha 3 */
+  height: 220px;               /* Altura grande */
+}
+
+.editorial-img:nth-child(7) {  /* nails7.jpg - Inferior DIREITO (MUITO GRANDE) */
+  grid-column: 1 / span 2;     /* Ocupa colunas 1 E 2 (mais largo) */
+  grid-row: 3;                 /* Linha 3 */
+  height: 220px;               /* Altura grande */
+}
+
+/* ============================================
+   RESPONSIVIDADE - MOBILE
    ============================================ */
 @media (max-width: 768px) {
   .editorial-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(7, auto); /* Altura automática */
+    grid-template-rows: repeat(7, 300px); /* Altura fixa para mobile */
     gap: 20px;
     max-width: 100%;
     padding: 0 15px;
   }
   
-  /* NO MOBILE: reset completo das posições do grid */
+  /* RESET COMPLETO PARA MOBILE - todas empilhadas */
   .editorial-img:nth-child(1),
   .editorial-img:nth-child(2),
   .editorial-img:nth-child(3),
@@ -463,9 +477,10 @@ body {
   .editorial-img:nth-child(6),
   .editorial-img:nth-child(7) {
     grid-column: 1;
-    grid-row: auto; /* Posição sequencial automática */
-    height: 300px; /* Altura consistente no mobile */
+    grid-row: auto; /* Posição sequencial */
+    height: 300px;
     width: 100%;
+    object-position: center center; /* Centralizado no mobile */
   }
   
   .galeria-tagline {
@@ -477,6 +492,7 @@ body {
     margin-bottom: 40px;
   }
 }
+
 /* SERVIÇOS - TABELA PREMIUM */
 .servicos {
   padding: 120px 5%;
